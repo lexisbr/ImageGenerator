@@ -5,54 +5,93 @@
  */
 package EDD;
 
+import Objetos.Pixel;
+
 /**
  *
  * @author lex
  */
 public class NodoMatriz {
-    private int indice;
-    private String eje;
-    private NodoMatriz anterior;
-    private NodoMatriz siguiente;
+    private int x;
+    private int y;
+    private Object contenido;
+    private NodoMatriz izquierda;
+    private NodoMatriz derecha;
+    private NodoMatriz abajo;
+    private NodoMatriz arriba;
 
-    public NodoMatriz(int indice, String eje, NodoMatriz anterior, NodoMatriz siguiente) {
-        this.indice = indice;
-        this.eje = eje;
-        this.anterior = anterior;
-        this.siguiente = siguiente;
+    public NodoMatriz(int x, int y, Object contenido, NodoMatriz izquierda, NodoMatriz derecha, NodoMatriz abajo, NodoMatriz arriba) {
+        this.x = x;
+        this.y = y;
+        this.contenido = contenido;
+        this.izquierda = izquierda;
+        this.derecha = derecha;
+        this.abajo = abajo;
+        this.arriba = arriba;
     }
 
-    public int getIndice() {
-        return indice;
+    public NodoMatriz(int x, int y, Object contenido) {
+        this.x = x;
+        this.y = y;
+        this.contenido = contenido;
     }
 
-    public String getEje() {
-        return eje;
+    public int getX() {
+        return x;
     }
 
-    public NodoMatriz getAnterior() {
-        return anterior;
+    public int getY() {
+        return y;
     }
 
-    public NodoMatriz getSiguiente() {
-        return siguiente;
+    public Object getContenido() {
+        return contenido;
     }
 
-    public void setIndice(int indice) {
-        this.indice = indice;
+    public NodoMatriz getIzquierda() {
+        return izquierda;
     }
 
-    public void setEje(String eje) {
-        this.eje = eje;
+    public NodoMatriz getDerecha() {
+        return derecha;
     }
 
-    public void setAnterior(NodoMatriz anterior) {
-        this.anterior = anterior;
+    public NodoMatriz getAbajo() {
+        return abajo;
     }
 
-    public void setSiguiente(NodoMatriz siguiente) {
-        this.siguiente = siguiente;
+    public NodoMatriz getArriba() {
+        return arriba;
     }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setContenido(Object contenido) {
+        this.contenido = contenido;
+    }
+
+    public void setIzquierda(NodoMatriz izquierda) {
+        this.izquierda = izquierda;
+    }
+
+    public void setDerecha(NodoMatriz derecha) {
+        this.derecha = derecha;
+    }
+
+    public void setAbajo(NodoMatriz abajo) {
+        this.abajo = abajo;
+    }
+
+    public void setArriba(NodoMatriz arriba) {
+        this.arriba = arriba;
+    }
+
     
     
     
