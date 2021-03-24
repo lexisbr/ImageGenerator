@@ -5,7 +5,6 @@
  */
 package EDD;
 
-import Objetos.Pixel;
 
 /**
  *
