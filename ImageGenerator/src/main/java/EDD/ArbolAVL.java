@@ -19,9 +19,16 @@ public class ArbolAVL {
         arbol.insertarNodo(new NodoArbol("a"));
         arbol.insertarNodo(new NodoArbol("aaa"));
         arbol.insertarNodo(new NodoArbol("aa"));
+        arbol.insertarNodo(new NodoArbol("aa"));
+        arbol.insertarNodo(new NodoArbol("aaBB"));
+        arbol.insertarNodo(new NodoArbol("aaCC"));
 
         arbol.mostrarArbol();
 
+        
+        arbol.eliminarNodo("aa");
+        arbol.mostrarArbol();
+        
     }
 
     public ArbolAVL() {
@@ -56,11 +63,7 @@ public class ArbolAVL {
 
         actualNodo.setAltura(1 + alturaMaxima(getAltura(actualNodo.getHijoIzquierdo()), getAltura(actualNodo.getHijoDerecho())));
 
-
         int fe = getFactorEquilibrio(actualNodo);
-        
-        //System.out.println("Fe nodo "+actualNodo.getId()+ " : "+fe);
-        //System.out.println("Nodo a insertar "+nuevoNodo.getId());
 
         if (fe > 1 && nuevoNodo.getId().compareTo(actualNodo.getHijoDerecho().getId()) > 0)
         {
@@ -123,14 +126,14 @@ public class ArbolAVL {
         if (nodo.getHijoDerecho() != null)
         {
             System.out.println("Nodo: " + nodo.getId() + " Hijo derecho: " + nodo.getHijoDerecho().getId());
-           // System.out.println("Altura " + nodo.getAltura());
+            // System.out.println("Altura " + nodo.getAltura());
             mostrarNodos(nodo.getHijoDerecho(), espacio + 1);
         }
 
         if (nodo.getHijoIzquierdo() != null)
         {
             System.out.println("Nodo: " + nodo.getId() + " Hijo Izquierdo: " + nodo.getHijoIzquierdo().getId());
-          //  System.out.println("Altura " + nodo.getAltura());
+            //  System.out.println("Altura " + nodo.getAltura());
             mostrarNodos(nodo.getHijoIzquierdo(), espacio + 1);
         }
 
@@ -158,4 +161,115 @@ public class ArbolAVL {
         return getAltura(actualNodo.getHijoDerecho()) - getAltura(actualNodo.getHijoIzquierdo());
     }
 
+    public NodoArbol buscarNodo(String id) {
+        return buscarEnArbol(root, id);
+    }
+
+    private NodoArbol buscarEnArbol(NodoArbol actualNodo, String id) {
+        if (actualNodo == null)
+        {
+            return null;
+        } else if (id.equals(actualNodo.getId()))
+        {
+            return actualNodo;
+        } else if (id.compareTo(actualNodo.getId()) < 0)
+        {
+            return buscarEnArbol(actualNodo.getHijoIzquierdo(), id);
+        } else
+        {
+            return buscarEnArbol(actualNodo.getHijoDerecho(), id);
+        }
+    }
+
+    public void eliminarNodo(String id) {
+        root = eliminarEnArbol(root, id);
+    }
+
+    public NodoArbol eliminarEnArbol(NodoArbol actualNodo, String id) {
+        if (actualNodo == null)
+        {
+            return actualNodo;
+        }
+
+        if (id.compareTo(actualNodo.getId()) < 0)
+        {
+            actualNodo.setHijoIzquierdo(eliminarEnArbol(actualNodo.getHijoIzquierdo(), id));
+        } else if (id.compareTo(actualNodo.getId()) > 0)
+        {
+            actualNodo.setHijoDerecho(eliminarEnArbol(actualNodo.getHijoDerecho(), id));
+        } else
+        {
+            if ((actualNodo.getHijoDerecho() == null) || (actualNodo.getHijoDerecho() == null))
+            {
+                NodoArbol aux = null;
+                if (actualNodo.getHijoDerecho() == aux)
+                {
+                    aux = actualNodo.getHijoDerecho();
+                } else
+                {
+                    aux = actualNodo.getHijoIzquierdo();
+                }
+
+                if (aux == null)
+                {
+                    actualNodo = null;
+                } else
+                {
+                    actualNodo = aux;
+                }
+            } else
+            {
+                NodoArbol aux = getNodoMasGrande(actualNodo.getHijoIzquierdo());
+
+                actualNodo = aux;
+
+                actualNodo.setHijoIzquierdo(eliminarEnArbol(actualNodo.getHijoIzquierdo(), aux.getId()));
+
+            }
+        }
+
+        if (actualNodo == null)
+        {
+            return actualNodo;
+        }
+
+        actualNodo.setAltura(alturaMaxima(getAltura(actualNodo.getHijoIzquierdo()), getAltura(actualNodo.getHijoDerecho())) + 1);
+
+        int fe = getFactorEquilibrio(actualNodo);
+
+        if (fe > 1 && getFactorEquilibrio(actualNodo.getHijoDerecho()) <= 0)
+        {
+            return rotacionIzquierda(actualNodo);
+        }
+
+        if (fe < -1 && getFactorEquilibrio(actualNodo.getHijoIzquierdo()) >= 0)
+        {
+            return rotacionDerecha(actualNodo);
+        }
+
+        if (fe > 1 && getFactorEquilibrio(actualNodo.getHijoDerecho()) < 0)
+        {
+            actualNodo.setHijoDerecho(rotacionDerecha(actualNodo.getHijoDerecho()));
+            return rotacionIzquierda(actualNodo);
+        }
+
+        if (fe < -1 && getFactorEquilibrio(actualNodo.getHijoIzquierdo()) > 0)
+        {
+            actualNodo.setHijoIzquierdo(rotacionIzquierda(actualNodo.getHijoIzquierdo()));
+            return rotacionDerecha(actualNodo);
+        }
+
+        return actualNodo;
+    }
+
+    private NodoArbol getNodoMasGrande(NodoArbol nodo) {
+        NodoArbol actualNodo = nodo;
+
+        while (actualNodo.getHijoDerecho() != null)
+        {
+            actualNodo = actualNodo.getHijoDerecho();
+        }
+
+        return actualNodo;
+    }
 }
