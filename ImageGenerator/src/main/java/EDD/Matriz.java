@@ -5,7 +5,6 @@
  */
 package EDD;
 
-
 /**
  *
  * @author lex
@@ -13,32 +12,17 @@ package EDD;
 public class Matriz {
 
     private NodoMatriz root;
+    private int id;
 
-    public Matriz() {
+    public Matriz(int id) {
+        this.id = id;
         this.root = new NodoMatriz(0, 0, "root");
     }
-    
-    
 
-    public static void main(String[] args) {
-        Matriz matriz = new Matriz();
-
-        matriz.insertarPixel(1, 1, "color0");
-        matriz.insertarPixel(1, 2, "color1");
-        matriz.insertarPixel(1, 4, "color4");
-        matriz.insertarPixel(2, 3, "color2");
-        matriz.insertarPixel(3, 3, "color3");
-        matriz.imprimirNodos();
-
-    }
-
-    public void insertarPixel(int columna, int fila, String color) {
-        NodoMatriz nuevoNodo = new NodoMatriz(columna, fila, color);
-        verificarEncabezado(columna, fila);
-
+    public void insertarPixel(NodoMatriz nuevoNodo) {
+        verificarEncabezado(nuevoNodo.getX(), nuevoNodo.getY());
         insertarPixelColumna(nuevoNodo);
         insertarPixelFila(nuevoNodo);
-
     }
 
     public void insertarPixelFila(NodoMatriz nuevoNodo) {
@@ -179,31 +163,19 @@ public class Matriz {
             }
             aux_y = aux_y.getAbajo();
         }
-
-        /*while (aux_y != null)
-        {
-            aux_x = aux_y;
-            while (aux_x != null)
-            {
-                System.out.print(aux_x.getContenido().toString() + " >> ");
-                aux_x = aux_x.getDerecha();
-            }
-            System.out.println("\nv");
-            aux_y = aux_y.getAbajo();
-        }*/
     }
 
     public void verificarEncabezado(int columna, int fila) {
 
         if (!existeEncabezadoColumna(columna))
         {
-            NodoMatriz nuevoEncabezado = new NodoMatriz(columna, 0, "x_"+columna);
+            NodoMatriz nuevoEncabezado = new NodoMatriz(columna, 0, "x_" + columna);
             crearEncabezadoColumna(nuevoEncabezado);
         }
 
         if (!existeEncabezadoFila(fila))
         {
-            NodoMatriz nuevoEncabezado = new NodoMatriz(0, fila, "y_"+fila);
+            NodoMatriz nuevoEncabezado = new NodoMatriz(0, fila, "y_" + fila);
             crearEncabezadoFila(nuevoEncabezado);
         }
     }
@@ -343,4 +315,12 @@ public class Matriz {
         this.root = root;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
 }

@@ -12,11 +12,19 @@ package EDD;
 public class NodoArbol {
 
     private Object contenido;
+    private String id;
+    private int altura;
     private NodoArbol hijoIzquierdo;
     private NodoArbol hijoDerecho;
 
+    public NodoArbol(String id) {
+        this.id = id;
+        altura = 1;
+    }
+
     public NodoArbol(Object contenido) {
         this.contenido = contenido;
+        altura = 1;
     }
 
     public NodoArbol(Object contenido, NodoArbol hijoIzquierdo, NodoArbol hijoDerecho) {
@@ -37,6 +45,14 @@ public class NodoArbol {
         return hijoDerecho;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public int getAltura() {
+        return altura;
+    }
+    
     public void setContenido(Object contenido) {
         this.contenido = contenido;
     }
@@ -49,4 +65,13 @@ public class NodoArbol {
         this.hijoDerecho = hijoDerecho;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setAltura(int altura) {
+        this.altura = altura;
+    }
+
+    
 }

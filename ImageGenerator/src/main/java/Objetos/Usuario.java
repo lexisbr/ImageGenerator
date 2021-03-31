@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package EDD;
+package Objetos;
 
 /**
  *
  * @author lex
  */
-public class ArbolBinario {
-    private NodoArbol raiz;
-    
+public class Usuario {
+    private String id;
     
     
 }
