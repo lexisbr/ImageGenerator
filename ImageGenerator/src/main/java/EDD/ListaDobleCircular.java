@@ -14,10 +14,6 @@ public class ListaDobleCircular {
     private NodoListaDoble root;
     private NodoListaDoble end;
 
-    public static void main(String[] args){
-        ListaDobleCircular lista = new ListaDobleCircular();
-    }
-    
     public ListaDobleCircular() {
         root = null;
         end = null;

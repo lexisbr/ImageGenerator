@@ -17,8 +17,9 @@ public class NodoArbol {
     private NodoArbol hijoIzquierdo;
     private NodoArbol hijoDerecho;
 
-    public NodoArbol(String id) {
+    public NodoArbol(String id, Object contenido) {
         this.id = id;
+        this.contenido = contenido;
         altura = 1;
     }
 
@@ -52,7 +53,7 @@ public class NodoArbol {
     public int getAltura() {
         return altura;
     }
-    
+
     public void setContenido(Object contenido) {
         this.contenido = contenido;
     }
@@ -73,5 +74,4 @@ public class NodoArbol {
         this.altura = altura;
     }
 
-    
 }
