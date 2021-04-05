@@ -303,5 +303,36 @@ public class ArbolAVL {
             JOptionPane.showMessageDialog(null, "El id ya existe");
         }
     }
+    
+    private NodoArbol moverNodo(NodoArbol nodoActual, NodoArbol nodoModificado){
+        if(nodoActual == null){
+            return nodoActual;
+        }
+        
+        if(nodoActual.getId().compareTo(nodoModificado.getId())< 0){
+            nodoActual.setHijoIzquierdo(moverNodo(nodoActual.getHijoIzquierdo(), nodoModificado));
+        } else if(nodoActual.getId().compareTo(nodoModificado.getId())>0){
+            nodoActual.setHijoDerecho(moverNodo(nodoActual.getHijoDerecho(), nodoModificado));
+        }else{
+            if(nodoActual.getHijoDerecho() != null && nodoActual.getHijoIzquierdo() !=null ){
+                NodoArbol hijoDerecho = nodoActual.getHijoDerecho();
+                NodoArbol hijoIzquierdo = nodoActual.getHijoIzquierdo();
+
+                if(hijoDerecho.getId().compareTo(hijoIzquierdo.getId()) > 0){
+                    nodoActual = hijoDerecho;
+                    hijoDerecho.setHijoIzquierdo(hijoIzquierdo);
+                    return nodoActual;
+                }else{ 
+                    nodoActual = hijoIzquierdo;
+                    hijoDerecho.setHijoDerecho(hijoDerecho);
+                    return nodoActual;
+                }
+            }
+        }
+        
+        
+        
+        
+    }
 
 }
