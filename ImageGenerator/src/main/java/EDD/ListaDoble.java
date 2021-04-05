@@ -5,6 +5,8 @@
  */
 package EDD;
 
+import Nodos.NodoListaDoble;
+
 /**
  *
  * @author lex

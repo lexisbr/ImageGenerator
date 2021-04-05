@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package EDD;
+package Nodos;
 
 /**
  *
@@ -17,6 +17,15 @@ public class NodoArbol {
     private NodoArbol hijoIzquierdo;
     private NodoArbol hijoDerecho;
 
+    public NodoArbol(Object contenido, String id, NodoArbol hijoIzquierdo, NodoArbol hijoDerecho) {
+        this.contenido = contenido;
+        this.id = id;
+        this.altura = 1;
+        this.hijoIzquierdo = hijoIzquierdo;
+        this.hijoDerecho = hijoDerecho;
+    }
+
+    
     public NodoArbol(String id, Object contenido) {
         this.id = id;
         this.contenido = contenido;

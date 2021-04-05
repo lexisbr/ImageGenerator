@@ -149,8 +149,11 @@ public class ModificarUsuarios extends javax.swing.JFrame {
 
     private void modificarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarButtonActionPerformed
         // TODO add your handling code here:
-        Estructuras.modificarUsuario(codigoTxt.getText(), nuevoId.getText());
-        
+        if (!codigoTxt.getText().equals("El usuario no existe"))
+        {
+            Estructuras.modificarUsuario(codigoTxt.getText(), nuevoId.getText());
+        }
+
     }//GEN-LAST:event_modificarButtonActionPerformed
 
     private void buscarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarButtonActionPerformed

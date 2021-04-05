@@ -6,8 +6,12 @@
 package Nucleo;
 
 import EDD.ArbolAVL;
-import EDD.NodoArbol;
+import Nodos.NodoArbol;
 import Objetos.Usuario;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,12 +22,12 @@ public class Estructuras {
     private static ArbolAVL arbolUsuarios = new ArbolAVL();
 
     public static void insertarUsuario(String id) {
-        arbolUsuarios.insertarNodo(new NodoArbol(id, new Usuario(id)));
+        arbolUsuarios.insertarNodo(new NodoArbol(id, new Usuario(id)), false);
         arbolUsuarios.mostrarArbol();
     }
 
     public static void eliminarUsuario(String id) {
-        arbolUsuarios.eliminarNodo(id);
+        arbolUsuarios.eliminarNodo(id, false);
         arbolUsuarios.mostrarArbol();
     }
 
@@ -43,6 +47,30 @@ public class Estructuras {
     public static void modificarUsuario(String user, String id) {
         arbolUsuarios.modificarUsuario(user, id);
         arbolUsuarios.mostrarArbol();
+    }
+
+    public static void guardarArchivo(StringBuffer codigo, String path) {
+        FileWriter writer = null;
+        try
+        {
+            writer = new FileWriter(path, true);
+            BufferedWriter out = new BufferedWriter(writer);
+            out.write("");
+            out.write(codigo.toString());
+            out.close();
+        } catch (IOException e)
+        {
+            JOptionPane.showMessageDialog(null, "No se pudo guardar el archivo");
+        } finally
+        {
+            try
+            {
+                writer.close();
+            } catch (IOException ex)
+            {
+                JOptionPane.showMessageDialog(null, "No se pudo cerrar el archivo");
+            }
+        }
     }
 
 }

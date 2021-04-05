@@ -5,24 +5,38 @@
  */
 package EDD;
 
+import Nodos.NodoMatriz;
+import Nucleo.Estructuras;
+import java.io.File;
+import java.io.IOException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author lex
  */
 public class Matriz {
 
+    private final String WHITE = "#FFFFFF";
     private NodoMatriz root;
-    private int id;
+    private String id;
 
-    public Matriz(int id) {
+    public Matriz(String id) {
         this.id = id;
         this.root = new NodoMatriz(0, 0, "root");
     }
 
     public void insertarPixel(NodoMatriz nuevoNodo) {
-        verificarEncabezado(nuevoNodo.getX(), nuevoNodo.getY());
-        insertarPixelColumna(nuevoNodo);
-        insertarPixelFila(nuevoNodo);
+        if (buscarNodo(nuevoNodo.getX(), nuevoNodo.getY()) == null)
+        {
+            verificarEncabezado(nuevoNodo.getX(), nuevoNodo.getY());
+            insertarPixelColumna(nuevoNodo);
+            insertarPixelFila(nuevoNodo);
+        } else
+        {
+            JOptionPane.showMessageDialog(null, "El pixel en la posicion (" + nuevoNodo.getX() + "," + nuevoNodo.getY() + ") ya existe");
+        }
+
     }
 
     public void insertarPixelFila(NodoMatriz nuevoNodo) {
@@ -69,7 +83,6 @@ public class Matriz {
                     }
                     break;
                 }
-
             } else
             {
                 aux_y = aux_y.getAbajo();
@@ -129,6 +142,33 @@ public class Matriz {
                 aux_x = aux_x.getDerecha();
             }
         }
+
+    }
+
+    public NodoMatriz buscarNodo(int x, int y) {
+        NodoMatriz aux = root.getDerecha();
+
+        while (aux != null)
+        {
+            if (aux.getX() == x)
+            {
+                while (aux != null)
+                {
+                    if (aux.getY() == y)
+                    {
+                        return aux;
+                    } else
+                    {
+                        aux = aux.getAbajo();
+                    }
+                }
+            } else
+            {
+                aux = aux.getDerecha();
+            }
+        }
+
+        return null;
 
     }
 
@@ -262,6 +302,7 @@ public class Matriz {
         }
 
     }
+    
 
     public void crearEncabezadoColumna(NodoMatriz nuevoEncabezado) {
         NodoMatriz aux = root.getDerecha();
@@ -307,6 +348,74 @@ public class Matriz {
 
     }
 
+    public int obtenerFilas(){
+        NodoMatriz nodoFilas = root.getAbajo();
+        while(nodoFilas.getAbajo() != null){
+            nodoFilas = nodoFilas.getAbajo();
+        }
+        return nodoFilas.getY();
+    }
+    
+    public int obtenerColumnas(){
+        NodoMatriz nodoColumnas = root.getDerecha();
+        while(nodoColumnas.getDerecha() != null){
+            nodoColumnas = nodoColumnas.getDerecha();
+        }
+        return nodoColumnas.getX();
+    }
+    
+    
+    public StringBuffer graficarMatriz() {
+        StringBuffer codigo = new StringBuffer("digraph matriz{\n"
+                + "node [shape=plaintext]\n"
+                + "a [label=<<TABLE BORDER=\"1\" CELLBORDER=\"1\" CELLSPACING=\"0\">\n");
+
+        for (int y = 1; y <= obtenerFilas(); y++)
+        {
+            codigo.append("<TR> ");
+            for (int x = 1; x <= obtenerColumnas(); x++)
+            {
+                NodoMatriz nodoActual = buscarNodo(x, y);
+                if (nodoActual != null)
+                {
+                    codigo.append("<TD BGCOLOR=\"" + nodoActual.getContenido().toString() + "\"></TD>");
+                } else
+                {
+                    codigo.append("<TD BGCOLOR=\"" + WHITE + "\"></TD>");
+                }
+            }
+            codigo.append("</TR>\n");
+        }
+
+        codigo.append("</TABLE>>];\n}");
+
+        return codigo;
+    }
+
+    public void generarImagen() {
+        try
+        {
+            StringBuffer codigo = graficarMatriz();
+            File imagen = new File("./capa.dot");
+            if (imagen.exists())
+            {
+                imagen.delete();
+                imagen.createNewFile();
+            } else
+            {
+                imagen.createNewFile();
+            }
+            Estructuras.guardarArchivo(codigo,imagen.getAbsolutePath());
+            String comando = "dot -Tpng capa.dot -o imagenCapa.png";
+            Runtime.getRuntime().exec(comando);
+            JOptionPane.showMessageDialog(null, "Se ha generado la imagen de la capa exitosamente: "+imagen.getPath());
+        } catch (IOException e)
+        {
+            JOptionPane.showMessageDialog(null, "Error al generar imagen de capa");
+        }
+
+    }
+
     public NodoMatriz getRoot() {
         return root;
     }
@@ -315,12 +424,12 @@ public class Matriz {
         this.root = root;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
-    
+
 }

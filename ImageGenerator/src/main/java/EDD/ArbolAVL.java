@@ -5,6 +5,7 @@
  */
 package EDD;
 
+import Nodos.NodoArbol;
 import Objetos.Usuario;
 import javax.swing.JOptionPane;
 
@@ -26,15 +27,18 @@ public class ArbolAVL {
         root = null;
     }
 
-    public void insertarNodo(NodoArbol nuevoNodo) {
+    public void insertarNodo(NodoArbol nuevoNodo, boolean modificar) {
         root = insertarAVL(root, nuevoNodo);
-        if (exist)
+        if (!modificar)
         {
-            JOptionPane.showMessageDialog(null, "El usuario ya existe");
-            exist = false;
-        } else
-        {
-            JOptionPane.showMessageDialog(null, "El usuario se ha creado exitosamente");
+            if (exist)
+            {
+                JOptionPane.showMessageDialog(null, "El usuario ya existe");
+                exist = false;
+            } else
+            {
+                JOptionPane.showMessageDialog(null, "El usuario se ha creado exitosamente");
+            }
         }
     }
 
@@ -185,16 +189,21 @@ public class ArbolAVL {
         }
     }
 
-    public void eliminarNodo(String id) {
+    public void eliminarNodo(String id, boolean modificar) {
         root = eliminarEnArbol(root, id);
-        if (deleted)
+
+        if (!modificar)
         {
-            JOptionPane.showMessageDialog(null, "Se ha eliminado usuario exitosamente");
-            deleted = false;
-        } else
-        {
-            JOptionPane.showMessageDialog(null, "El usuario no existe");
+            if (deleted)
+            {
+                JOptionPane.showMessageDialog(null, "Se ha eliminado usuario exitosamente");
+                deleted = false;
+            } else
+            {
+                JOptionPane.showMessageDialog(null, "El usuario no existe");
+            }
         }
+
     }
 
     public NodoArbol eliminarEnArbol(NodoArbol actualNodo, String id) {
@@ -293,48 +302,18 @@ public class ArbolAVL {
 
         if (nodoNuevo == null)
         {
-            nodoSelec.setId(id);
             Usuario user = (Usuario) nodoSelec.getContenido();
             user.setId(id);
-            nodoSelec.setContenido(user);
+            NodoArbol nodoModificado = new NodoArbol(user,id,nodoSelec.getHijoIzquierdo(),nodoSelec.getHijoDerecho());
+            eliminarNodo(nodoSelec.getId(),true);
+            mostrarArbol();
+            insertarNodo(nodoModificado,true);
+            mostrarArbol();
             JOptionPane.showMessageDialog(null, "El usuario fue modificado");
         } else
         {
             JOptionPane.showMessageDialog(null, "El id ya existe");
         }
-    }
-    
-    private NodoArbol moverNodo(NodoArbol nodoActual, NodoArbol nodoModificado){
-        if(nodoActual == null){
-            return nodoActual;
-        }
-        
-        if(nodoActual.getId().compareTo(nodoModificado.getId())< 0){
-            nodoActual.setHijoIzquierdo(moverNodo(nodoActual.getHijoIzquierdo(), nodoModificado));
-        } else if(nodoActual.getId().compareTo(nodoModificado.getId())>0){
-            nodoActual.setHijoDerecho(moverNodo(nodoActual.getHijoDerecho(), nodoModificado));
-        }else{
-            if(nodoActual.getHijoDerecho() != null && nodoActual.getHijoIzquierdo() !=null ){
-                NodoArbol hijoDerecho = nodoActual.getHijoDerecho();
-                NodoArbol hijoIzquierdo = nodoActual.getHijoIzquierdo();
-
-                if(hijoDerecho.getId().compareTo(hijoIzquierdo.getId()) > 0){
-                    nodoActual = hijoDerecho;
-                    hijoDerecho.setHijoIzquierdo(hijoIzquierdo);
-                    return nodoActual;
-                }else{ 
-                    nodoActual = hijoIzquierdo;
-                    hijoDerecho.setHijoDerecho(hijoDerecho);
-                    return nodoActual;
-                }
-            }
-        }
-        
-        
-        
-        
-        
-        
     }
 
 }
