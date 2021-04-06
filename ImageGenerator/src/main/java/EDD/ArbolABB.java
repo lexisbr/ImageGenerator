@@ -36,10 +36,8 @@ public class ArbolABB {
     private NodoArbolABB insertarABB(NodoArbolABB actualNodo, NodoArbolABB nuevoNodo) {
         if (actualNodo == null)
         {
-            System.out.println("Nodo nuevo " + nuevoNodo.getId());
             return nuevoNodo;
         }
-        System.out.println("Nodo actual " + actualNodo.getId());
 
         if (nuevoNodo.getId().compareTo(actualNodo.getId()) < 0)
         {
@@ -56,30 +54,52 @@ public class ArbolABB {
         return actualNodo;
     }
 
-    public void mostrarArbol() {
-        System.out.println("ARBOL ABB");
-        obtenerNodo(root);
+    public NodoArbolABB buscarNodo(String id) {
+        return obtenerNodo(root, id);
     }
 
-    private void obtenerNodo(NodoArbolABB actualNodo) {
+    private NodoArbolABB obtenerNodo(NodoArbolABB actualNodo, String id) {
+        if (actualNodo == null)
+        {
+            return null;
+        } else if (id.equals(actualNodo.getId()))
+        {
+            return actualNodo;
+        } else if (id.compareTo(actualNodo.getId()) < 0)
+        {
+            return obtenerNodo(actualNodo.getHijoIzquierdo(), id);
+        } else
+        {
+            return obtenerNodo(actualNodo.getHijoDerecho(), id);
+        }
+
+    }
+
+    public void mostrarArbol() {
+        System.out.println("ARBOL ABB");
+        obtenerNodos(root);
+    }
+
+    private void obtenerNodos(NodoArbolABB actualNodo) {
 
         if (actualNodo != null)
         {
-            
+
             if (actualNodo.getHijoIzquierdo() != null)
             {
-                System.out.print("\nNodo padre: " + actualNodo.getId()+" >>>> Hijo Izquierdo: " + actualNodo.getHijoIzquierdo().getId());
-                obtenerNodo(actualNodo.getHijoIzquierdo());
+                System.out.print("\nNodo padre: " + actualNodo.getId() + " >>>> Hijo Izquierdo: " + actualNodo.getHijoIzquierdo().getId());
+                obtenerNodos(actualNodo.getHijoIzquierdo());
             }
-            
+
             if (actualNodo.getHijoDerecho() != null)
             {
-                System.out.print("\nNodo padre: " + actualNodo.getId()+" >>>> Hijo Derecho: " + actualNodo.getHijoDerecho().getId());
-                obtenerNodo(actualNodo.getHijoDerecho());
-            } 
-            
-            if(actualNodo.getHijoIzquierdo() == null && actualNodo.getHijoDerecho() == null){
-                System.out.print("\nNodo hoja: "+actualNodo.getId());
+                System.out.print("\nNodo padre: " + actualNodo.getId() + " >>>> Hijo Derecho: " + actualNodo.getHijoDerecho().getId());
+                obtenerNodos(actualNodo.getHijoDerecho());
+            }
+
+            if (actualNodo.getHijoIzquierdo() == null && actualNodo.getHijoDerecho() == null)
+            {
+                System.out.print("\nNodo hoja: " + actualNodo.getId());
             }
         } else
         {

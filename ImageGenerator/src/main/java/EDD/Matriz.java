@@ -21,6 +21,10 @@ public class Matriz {
     private NodoMatriz root;
     private String id;
 
+    public Matriz() {
+        this.root = new NodoMatriz(0, 0, "root");
+    }
+
     public Matriz(String id) {
         this.id = id;
         this.root = new NodoMatriz(0, 0, "root");
@@ -302,7 +306,6 @@ public class Matriz {
         }
 
     }
-    
 
     public void crearEncabezadoColumna(NodoMatriz nuevoEncabezado) {
         NodoMatriz aux = root.getDerecha();
@@ -348,24 +351,35 @@ public class Matriz {
 
     }
 
-    public int obtenerFilas(){
+    public boolean estaVacia() {
+        if (root.getDerecha() == null && root.getAbajo() == null)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
+    public int obtenerFilas() {
         NodoMatriz nodoFilas = root.getAbajo();
-        while(nodoFilas.getAbajo() != null){
+        while (nodoFilas.getAbajo() != null)
+        {
             nodoFilas = nodoFilas.getAbajo();
         }
         return nodoFilas.getY();
     }
-    
-    public int obtenerColumnas(){
+
+    public int obtenerColumnas() {
         NodoMatriz nodoColumnas = root.getDerecha();
-        while(nodoColumnas.getDerecha() != null){
+        while (nodoColumnas.getDerecha() != null)
+        {
             nodoColumnas = nodoColumnas.getDerecha();
         }
         return nodoColumnas.getX();
     }
-    
-    
-    public StringBuffer graficarMatriz() {
+
+    private StringBuffer graficarMatriz() {
         StringBuffer codigo = new StringBuffer("digraph matriz{\n"
                 + "node [shape=plaintext]\n"
                 + "a [label=<<TABLE BORDER=\"1\" CELLBORDER=\"1\" CELLSPACING=\"0\">\n");
@@ -405,10 +419,10 @@ public class Matriz {
             {
                 imagen.createNewFile();
             }
-            Estructuras.guardarArchivo(codigo,imagen.getAbsolutePath());
+            Estructuras.guardarArchivo(codigo, imagen.getAbsolutePath());
             String comando = "dot -Tpng capa.dot -o imagenCapa.png";
             Runtime.getRuntime().exec(comando);
-            JOptionPane.showMessageDialog(null, "Se ha generado la imagen de la capa exitosamente: "+imagen.getPath());
+            JOptionPane.showMessageDialog(null, "Se ha generado la imagen de la capa exitosamente: " + imagen.getPath());
         } catch (IOException e)
         {
             JOptionPane.showMessageDialog(null, "Error al generar imagen de capa");

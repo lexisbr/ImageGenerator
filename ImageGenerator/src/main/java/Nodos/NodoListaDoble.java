@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Nodos;
 
 /**
@@ -14,6 +9,11 @@ public class NodoListaDoble {
     private Object contenido;
     private NodoListaDoble siguiente;
     private NodoListaDoble anterior;
+
+    public NodoListaDoble(String id, Object contenido) {
+        this.id = id;
+        this.contenido = contenido;
+    }
 
     public NodoListaDoble(String id) {
         this.id = id;
