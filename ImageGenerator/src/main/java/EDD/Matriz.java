@@ -354,7 +354,7 @@ public class Matriz {
     public boolean estaVacia() {
         if (root.getDerecha() == null && root.getAbajo() == null)
         {
-            return true;
+             return true;
         } else
         {
             return false;

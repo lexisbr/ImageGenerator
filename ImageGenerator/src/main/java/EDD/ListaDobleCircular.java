@@ -46,6 +46,8 @@ public class ListaDobleCircular {
         {
             System.out.println("NODO YA EXISTE: " + nuevoNodo.getId());
         }
+        
+        ordenarLista();
     }
 
     public boolean nodoNoExiste(String id) {
@@ -113,6 +115,7 @@ public class ListaDobleCircular {
             nodoSiguiente.setAnterior(nodoAnterior);
             JOptionPane.showMessageDialog(null, "Se ha eliminado imagen correctamente.");
         }
+        ordenarLista();
     }
 
     public void ordenarLista() {

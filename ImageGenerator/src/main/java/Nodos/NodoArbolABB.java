@@ -23,7 +23,7 @@ public class NodoArbolABB {
     }
 
     public NodoArbolABB(Object contenido, String id) {
-        this.contenido = contenido;
+        this.contenido =  contenido;
         this.id = id;
     }
 

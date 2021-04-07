@@ -17,7 +17,7 @@ public class Usuario {
 
     public Usuario(String id) {
         this.id = id;
-        this.listaImagenes = null;
+        this.listaImagenes = new ListaDoble();
     }
 
     public String getId() {

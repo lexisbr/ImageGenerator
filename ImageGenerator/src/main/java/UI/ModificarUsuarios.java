@@ -158,7 +158,7 @@ public class ModificarUsuarios extends javax.swing.JFrame {
 
     private void buscarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarButtonActionPerformed
         // TODO add your handling code here:
-        String id = Estructuras.buscarUsuario(codigoField.getText());
+        String id = Estructuras.buscarUsuario(codigoField.getText()).getId();
         if (id != null)
         {
             codigoTxt.setText(id);
