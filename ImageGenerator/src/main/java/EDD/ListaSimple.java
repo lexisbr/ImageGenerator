@@ -19,19 +19,6 @@ public class ListaSimple {
     private NodoListaSimple root;
     private NodoListaSimple end;
 
-    public static void main(String[] args) {
-        ListaSimple lista = new ListaSimple();
-        lista.insertarNodo(new NodoListaSimple("uno"));
-        lista.insertarNodo(new NodoListaSimple("dos", new Matriz("dos")));
-        lista.insertarNodo(new NodoListaSimple("tres", new Matriz("tres")));
-        lista.insertarNodo(new NodoListaSimple("cuatro", new Matriz("cuatro")));
-
-        Matriz capa = lista.extraerNodo();
-        System.out.println("Capa " + capa.getId());
-
-        lista.mostrarDatos();
-    }
-
     public ListaSimple() {
         this.root = null;
         this.end = null;
@@ -63,12 +50,12 @@ public class ListaSimple {
 
     }
 
-    public NodoListaSimple buscarNodo(String id) {
+    public NodoListaSimple buscarNodo(int id) {
         NodoListaSimple aux = root;
 
         while (aux != null)
         {
-            if (aux.getId().equals(id))
+            if (aux.getId() == id)
             {
                 return aux;
             } else
@@ -119,7 +106,7 @@ public class ListaSimple {
         }
     }
 
-    public Matriz obtenerCapa(String id) {
+    public Matriz obtenerCapa(int id) {
         if (root != null)
         {
             NodoListaSimple aux = buscarNodo(id);

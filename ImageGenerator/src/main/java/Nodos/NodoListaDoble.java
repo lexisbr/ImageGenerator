@@ -5,21 +5,21 @@ package Nodos;
  * @author lex
  */
 public class NodoListaDoble {
-    private String id;
+    private int id;
     private Object contenido;
     private NodoListaDoble siguiente;
     private NodoListaDoble anterior;
 
-    public NodoListaDoble(String id, Object contenido) {
+    public NodoListaDoble(int id, Object contenido) {
         this.id = id;
         this.contenido = contenido;
     }
 
-    public NodoListaDoble(String id) {
+    public NodoListaDoble(int id) {
         this.id = id;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -35,7 +35,7 @@ public class NodoListaDoble {
         return anterior;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

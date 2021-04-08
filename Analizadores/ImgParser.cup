@@ -1,0 +1,56 @@
+package Analizadores;
+
+import Nodos.NodoListaSimple;
+import Objetos.Imagen;
+import Nucleo.Estructuras;
+import java_cup.runtime.*;
+
+parser code {:
+    Imagen imagen = new Imagen();
+    public ImgParser(ImgLexer lex){
+        super(lex);
+    }
+
+    @Override
+    public void syntax_error(Symbol st) {
+        Token error = (Token) st.value;
+        report_error("Error Sintactico con el Token:"+ error.getLexeme()+" este no pertenece a la estructura  >linea: "+error.getLine()+" >columna: "+error.getColumn() + "\n",null);
+    }
+
+:};
+
+non terminal s0,s1,s2,s3;
+terminal Token ID,NUMERO,LLAVE_A,LLAVE_C,COMA;
+start with s0;
+
+s0 ::= s1 s0
+    |
+;
+ 
+s1 ::= ID:id LLAVE_A s2 LLAVE_C {:
+        Imagen nuevaImagen = imagen;
+        nuevaImagen.setId(Integer.parseInt(id.getLexeme()));
+        nuevaImagen.getCapas().mostrarDatos();
+        Estructuras.insertarImagen(nuevaImagen);
+        imagen = new Imagen();
+    :}
+    | NUMERO:id LLAVE_A s2 LLAVE_C {:
+        Imagen nuevaImagen = imagen;
+        nuevaImagen.setId(Integer.parseInt(id.getLexeme()));
+        nuevaImagen.getCapas().mostrarDatos();
+        Estructuras.insertarImagen(nuevaImagen);
+        imagen = new Imagen();
+    :}
+;
+
+s2 ::= s3 COMA s2
+    | s3
+;
+
+s3 ::= NUMERO:capa {:
+        imagen.getCapas().insertarNodo(new NodoListaSimple(Integer.parseInt(capa.getLexeme())));
+    :}
+    | ID:capa {:
+        imagen.getCapas().insertarNodo(new NodoListaSimple(Integer.parseInt(capa.getLexeme())));
+    :}
+;

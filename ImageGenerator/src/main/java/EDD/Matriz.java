@@ -19,13 +19,13 @@ public class Matriz {
 
     private final String WHITE = "#FFFFFF";
     private NodoMatriz root;
-    private String id;
+    private int id;
 
     public Matriz() {
         this.root = new NodoMatriz(0, 0, "root");
     }
 
-    public Matriz(String id) {
+    public Matriz(int id) {
         this.id = id;
         this.root = new NodoMatriz(0, 0, "root");
     }
@@ -36,10 +36,11 @@ public class Matriz {
             verificarEncabezado(nuevoNodo.getX(), nuevoNodo.getY());
             insertarPixelColumna(nuevoNodo);
             insertarPixelFila(nuevoNodo);
-        } else
+        }/* else
         {
-            JOptionPane.showMessageDialog(null, "El pixel en la posicion (" + nuevoNodo.getX() + "," + nuevoNodo.getY() + ") ya existe");
-        }
+            JOptionPane.showMessageDialog(null, "El pixel en la posicion (" + nuevoNodo.getX() + "," + nuevoNodo.getY() + ") ya existe. Matriz: "+getId());
+            imprimirNodos();
+        }*/
 
     }
 
@@ -179,7 +180,7 @@ public class Matriz {
     public void imprimirNodos() {
         NodoMatriz aux_x = root;
         NodoMatriz aux_y = root;
-
+        System.out.println("\n\nMatriz: "+getId());
         while (aux_y != null)
         {
             aux_x = aux_y;
@@ -438,11 +439,11 @@ public class Matriz {
         this.root = root;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

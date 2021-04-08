@@ -7,7 +7,12 @@ package UI;
 
 import Analizadores.CapasLexer;
 import Analizadores.CapasParser;
+import Analizadores.ImgLexer;
+import Analizadores.ImgParser;
+import Nodos.NodoListaDoble;
+import Nodos.NodoListaSimple;
 import Nucleo.Estructuras;
+import Objetos.Imagen;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -29,6 +34,7 @@ public class CargaOpciones extends javax.swing.JFrame {
      * Creates new form CargaOpciones
      */
     private String cadena = "";
+
     public CargaOpciones() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -48,7 +54,7 @@ public class CargaOpciones extends javax.swing.JFrame {
         opcionesRadio = new javax.swing.ButtonGroup();
         label1 = new java.awt.Label();
         jPanel1 = new javax.swing.JPanel();
-        datosButton = new javax.swing.JButton();
+        limpiarButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         capasRadio = new javax.swing.JRadioButton();
         usuariosRadio = new javax.swing.JRadioButton();
@@ -56,6 +62,7 @@ public class CargaOpciones extends javax.swing.JFrame {
         pathTxt = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         archivoButton = new javax.swing.JButton();
+        datosButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,15 +72,15 @@ public class CargaOpciones extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 0, 102), null, null));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        datosButton.setText("Cargar datos");
-        datosButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, new java.awt.Color(102, 102, 102)));
-        datosButton.setEnabled(false);
-        datosButton.addActionListener(new java.awt.event.ActionListener() {
+        limpiarButton.setText("Limpiar archivo");
+        limpiarButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, new java.awt.Color(102, 102, 102)));
+        limpiarButton.setEnabled(false);
+        limpiarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                datosButtonActionPerformed(evt);
+                limpiarButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(datosButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 200, 40));
+        jPanel1.add(limpiarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 200, 40));
 
         jLabel1.setText("Datos a cargar:");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 8, -1, -1));
@@ -103,6 +110,16 @@ public class CargaOpciones extends javax.swing.JFrame {
         });
         jPanel1.add(archivoButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, 200, 40));
 
+        datosButton.setText("Cargar datos");
+        datosButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, new java.awt.Color(102, 102, 102)));
+        datosButton.setEnabled(false);
+        datosButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                datosButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(datosButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 210, 200, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -130,38 +147,35 @@ public class CargaOpciones extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void datosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_datosButtonActionPerformed
+    private void limpiarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarButtonActionPerformed
         // TODO add your handling code here:
-        StringReader reader = new StringReader(cadena);
-        if(capasRadio.isSelected()){
-            CapasLexer lexer = new CapasLexer(reader);
-            CapasParser parser = new CapasParser(lexer);
-            try{
-                parser.parse();
-                Estructuras.mostrarCapas();
-                Estructuras.graficarCapa("capa1");
-                Estructuras.graficarCapa("capa2");
-                Estructuras.graficarCapa("capa3");
-            }catch(Exception ex){
-                ex.printStackTrace();
-            }
-            
-        }
-        
-    }//GEN-LAST:event_datosButtonActionPerformed
+        datosButton.setEnabled(false);
+        limpiarButton.setEnabled(false);
+        capasRadio.setEnabled(true);
+        imagenesRadio.setEnabled(true);
+        usuariosRadio.setEnabled(true);
+        archivoButton.setEnabled(true);
+        pathTxt.setText("");
+        cadena = "";
+
+    }//GEN-LAST:event_limpiarButtonActionPerformed
 
     private void archivoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_archivoButtonActionPerformed
         // TODO add your handling code here:
         JFileChooser fc = new JFileChooser();
 
         FileNameExtensionFilter filtro = null;
-        if(capasRadio.isSelected()){
-            filtro = new FileNameExtensionFilter("*.cap","cap");
-        }else if(imagenesRadio.isSelected()){
-            filtro = new FileNameExtensionFilter("*.im","im");
-        }else if(usuariosRadio.isSelected()){
-            filtro = new FileNameExtensionFilter("*.us","us");
-        }else{
+        if (capasRadio.isSelected())
+        {
+            filtro = new FileNameExtensionFilter("*.cap", "cap");
+        } else if (imagenesRadio.isSelected())
+        {
+            filtro = new FileNameExtensionFilter("*.im", "im");
+        } else if (usuariosRadio.isSelected())
+        {
+            filtro = new FileNameExtensionFilter("*.us", "us");
+        } else
+        {
             JOptionPane.showMessageDialog(this, "No ha seleccionado tipo de archivo");
             return;
         }
@@ -185,9 +199,11 @@ public class CargaOpciones extends javax.swing.JFrame {
                 }
                 System.out.println(cadena);
                 datosButton.setEnabled(true);
+                limpiarButton.setEnabled(true);
                 capasRadio.setEnabled(false);
                 imagenesRadio.setEnabled(false);
                 usuariosRadio.setEnabled(false);
+                archivoButton.setEnabled(false);
 
             } catch (IOException ex)
             {
@@ -195,6 +211,36 @@ public class CargaOpciones extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_archivoButtonActionPerformed
+
+    private void datosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_datosButtonActionPerformed
+        // TODO add your handling code here:
+        StringReader reader = new StringReader(cadena);
+        if (capasRadio.isSelected())
+        {
+            CapasLexer lexer = new CapasLexer(reader);
+            CapasParser parser = new CapasParser(lexer);
+            try
+            {
+                parser.parse();
+                JOptionPane.showMessageDialog(this, "Se han cargado capas correctamente.");
+            } catch (Exception ex)
+            {
+                ex.printStackTrace();
+            }
+
+        }else if(imagenesRadio.isSelected()){
+            ImgLexer lexer = new ImgLexer(reader);
+            ImgParser parser = new ImgParser(lexer);
+            try
+            {
+                parser.parse();
+                JOptionPane.showMessageDialog(this, "Se han cargado imagenes correctamente.");
+            } catch (Exception ex)
+            {
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_datosButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -247,6 +293,7 @@ public class CargaOpciones extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private java.awt.Label label1;
+    private javax.swing.JButton limpiarButton;
     private javax.swing.ButtonGroup opcionesRadio;
     private javax.swing.JLabel pathTxt;
     private javax.swing.JRadioButton usuariosRadio;

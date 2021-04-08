@@ -13,16 +13,16 @@ public class NodoArbolABB {
     private NodoArbolABB hijoIzquierdo;
     private NodoArbolABB hijoDerecho;
     private Object contenido;
-    private String id;
+    private int id;
 
-    public NodoArbolABB(NodoArbolABB hijoIzquierdo, NodoArbolABB hijoDerecho, Object contenido, String id) {
+    public NodoArbolABB(NodoArbolABB hijoIzquierdo, NodoArbolABB hijoDerecho, Object contenido, int id) {
         this.hijoIzquierdo = hijoIzquierdo;
         this.hijoDerecho = hijoDerecho;
         this.contenido = contenido;
         this.id = id;
     }
 
-    public NodoArbolABB(Object contenido, String id) {
+    public NodoArbolABB(Object contenido, int id) {
         this.contenido =  contenido;
         this.id = id;
     }
@@ -39,7 +39,7 @@ public class NodoArbolABB {
         return contenido;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -55,7 +55,7 @@ public class NodoArbolABB {
         this.contenido = contenido;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
     

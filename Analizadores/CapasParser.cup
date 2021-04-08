@@ -19,7 +19,7 @@ parser code {:
 
 :};
 
-non terminal s0,s1,s2,s3,s4;
+non terminal s0,s1,s2;
 terminal Token ID,COLOR,NUMERO,PUNTOCOMA,LLAVE_A,LLAVE_C,COMA;
 start with s0;
 
@@ -27,9 +27,9 @@ s0 ::= s1 s0
     |
 ;
 
-s1 ::= ID:id LLAVE_A s2 LLAVE_C{: 
+s1 ::= NUMERO:id LLAVE_A s2 LLAVE_C{: 
         Matriz nuevaMatriz = matriz;
-        nuevaMatriz.setId(id.getLexeme());
+        nuevaMatriz.setId(Integer.parseInt(id.getLexeme()));
         nuevaMatriz.imprimirNodos();
         Estructuras.insertarCapa(nuevaMatriz);
         matriz = new Matriz();

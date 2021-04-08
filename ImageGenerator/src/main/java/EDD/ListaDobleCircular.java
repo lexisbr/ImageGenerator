@@ -12,17 +12,6 @@ public class ListaDobleCircular {
     private NodoListaDoble root;
     private NodoListaDoble end;
 
-    public static void main(String[] args) {
-        ListaDobleCircular lista = new ListaDobleCircular();
-        lista.insertarNodo(new NodoListaDoble("3"));
-        lista.insertarNodo(new NodoListaDoble("2"));
-        lista.insertarNodo(new NodoListaDoble("1"));
-        lista.insertarNodo(new NodoListaDoble("4"));
-        lista.mostrarDatos();
-        lista.ordenarLista();
-        lista.mostrarDatos();
-    }
-
     public ListaDobleCircular() {
         root = null;
         end = null;
@@ -50,11 +39,11 @@ public class ListaDobleCircular {
         ordenarLista();
     }
 
-    public boolean nodoNoExiste(String id) {
+    public boolean nodoNoExiste(int id) {
         NodoListaDoble aux = root;
         do
         {
-            if (aux.getId().equals(id))
+            if (aux.getId() == id)
             {
                 return false;
             }
@@ -86,13 +75,13 @@ public class ListaDobleCircular {
 
     }
 
-    public NodoListaDoble buscarNodo(String id) {
+    public NodoListaDoble buscarNodo(int id) {
         if (root != null)
         {
             NodoListaDoble aux = root;
             do
             {
-                if (aux.getId().equals(id))
+                if (aux.getId() == id)
                 {
                     return aux;
                 } else
@@ -105,7 +94,7 @@ public class ListaDobleCircular {
         return null;
     }
 
-    public void eliminarNodo(String id) {
+    public void eliminarNodo(int id) {
         if (root != null)
         {
             NodoListaDoble nodo = buscarNodo(id);
@@ -126,8 +115,8 @@ public class ListaDobleCircular {
                 NodoListaDoble actual = root;
                 NodoListaDoble siguiente = actual.getSiguiente();
                 for(int j=1; j<getSize(); j++){
-                    if(actual.getId().compareTo(siguiente.getId()) > 0){
-                        String id_1 = actual.getId();
+                    if(actual.getId() < siguiente.getId()){
+                        int id_1 = actual.getId();
                         Object imagen_1 = actual.getContenido();
                         
                         actual.setId(siguiente.getId());

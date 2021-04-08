@@ -16,15 +16,6 @@ public class ArbolABB {
 
     private NodoArbolABB root;
 
-    public static void main(String[] args) {
-        ArbolABB arbol = new ArbolABB();
-        arbol.insertarNodo(new NodoArbolABB(new Matriz("uno"), "uno"));
-        arbol.insertarNodo(new NodoArbolABB(new Matriz("dos"), "dos"));
-        arbol.insertarNodo(new NodoArbolABB(new Matriz("tres"), "tres"));
-        arbol.insertarNodo(new NodoArbolABB(new Matriz("cuat"), "cuat"));
-        arbol.mostrarArbol();
-    }
-
     public ArbolABB() {
         this.root = null;
     }
@@ -39,10 +30,10 @@ public class ArbolABB {
             return nuevoNodo;
         }
 
-        if (nuevoNodo.getId().compareTo(actualNodo.getId()) < 0)
+        if (nuevoNodo.getId() < actualNodo.getId())
         {
             actualNodo.setHijoIzquierdo(insertarABB(actualNodo.getHijoIzquierdo(), nuevoNodo));
-        } else if (nuevoNodo.getId().compareTo(actualNodo.getId()) > 0)
+        } else if (nuevoNodo.getId() > actualNodo.getId())
         {
             actualNodo.setHijoDerecho(insertarABB(actualNodo.getHijoDerecho(), nuevoNodo));
         } else
@@ -54,18 +45,18 @@ public class ArbolABB {
         return actualNodo;
     }
 
-    public NodoArbolABB buscarNodo(String id) {
+    public NodoArbolABB buscarNodo(int id) {
         return obtenerNodo(root, id);
     }
 
-    private NodoArbolABB obtenerNodo(NodoArbolABB actualNodo, String id) {
+    private NodoArbolABB obtenerNodo(NodoArbolABB actualNodo, int id) {
         if (actualNodo == null)
         {
             return null;
-        } else if (id.equals(actualNodo.getId()))
+        } else if (id == actualNodo.getId())
         {
             return actualNodo;
-        } else if (id.compareTo(actualNodo.getId()) < 0)
+        } else if (id < actualNodo.getId())
         {
             return obtenerNodo(actualNodo.getHijoIzquierdo(), id);
         } else

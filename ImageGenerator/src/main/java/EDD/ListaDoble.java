@@ -44,11 +44,11 @@ public class ListaDoble {
         }
     }
 
-    public NodoListaDoble eliminarNodo(String id) {
+    public NodoListaDoble eliminarNodo(int id) {
         NodoListaDoble aux = root;
         while (aux != null)
         {
-            if (aux.getId().equals(root))
+            if (aux.getId() == id )
             {
                 NodoListaDoble nodoAnterior = aux.getAnterior();
                 NodoListaDoble nodoSiguiente = aux.getSiguiente();
@@ -63,11 +63,11 @@ public class ListaDoble {
         return null;
     }
 
-    public NodoListaDoble buscarNodo(String id) {
+    public NodoListaDoble buscarNodo(int id) {
         NodoListaDoble aux = root;
         while (aux != null)
         {
-            if (aux.getId().equals(root))
+            if (aux.getId() == id)
             {
                 return aux;
             } else
@@ -78,11 +78,11 @@ public class ListaDoble {
         return null;
     }
 
-    public boolean nodoNoExiste(String id) {
+    public boolean nodoNoExiste(int id) {
         NodoListaDoble aux = root;
         while (aux != null)
         {
-            if (aux.getId().equals(id))
+            if (aux.getId() == id)
             {
                 return false;
             }

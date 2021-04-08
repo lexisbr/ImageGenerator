@@ -11,16 +11,16 @@ package Nodos;
  */
 public class NodoListaSimple {
 
-    private String id;
+    private int id;
     private Object contenido;
     private NodoListaSimple siguiente;
     private NodoArbolABB capa;
 
-    public NodoListaSimple(String id) {
+    public NodoListaSimple(int id) {
         this.id = id;
     }
 
-    public NodoListaSimple(String id, Object contenido) {
+    public NodoListaSimple(int id, Object contenido) {
         this.id = id;
         this.contenido = contenido;
     }
@@ -38,7 +38,7 @@ public class NodoListaSimple {
         return siguiente;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -54,7 +54,7 @@ public class NodoListaSimple {
         this.siguiente = siguiente;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

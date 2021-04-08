@@ -18,16 +18,20 @@ import javax.swing.JOptionPane;
  */
 public class Imagen {
 
-    private String id;
+    private int id;
     private ListaSimple capas;
     private Matriz imagen;
 
-    public Imagen(String id) {
+    public Imagen() {
+        this.capas = new ListaSimple();
+    }
+
+    public Imagen(int id) {
         this.id = id;
         this.capas = new ListaSimple();
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -39,7 +43,7 @@ public class Imagen {
         return imagen;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

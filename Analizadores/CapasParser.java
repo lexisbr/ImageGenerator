@@ -44,12 +44,12 @@ public class CapasParser extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\020\000\006\002\uffff\004\004\001\002\000\004\010" +
-    "\011\001\002\000\006\002\uffff\004\004\001\002\000\004" +
+    "\000\020\000\006\002\uffff\006\004\001\002\000\004\010" +
+    "\011\001\002\000\006\002\uffff\006\004\001\002\000\004" +
     "\002\007\001\002\000\004\002\001\001\002\000\004\002" +
     "\000\001\002\000\006\006\012\011\ufffc\001\002\000\004" +
     "\012\015\001\002\000\004\011\014\001\002\000\006\002" +
-    "\ufffe\004\ufffe\001\002\000\004\006\016\001\002\000\004" +
+    "\ufffe\006\ufffe\001\002\000\004\006\016\001\002\000\004" +
     "\012\017\001\002\000\004\005\020\001\002\000\004\007" +
     "\021\001\002\000\006\006\012\011\ufffc\001\002\000\004" +
     "\011\ufffd\001\002" });
@@ -175,7 +175,7 @@ class CUP$CapasParser$actions {
           return CUP$CapasParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 3: // s1 ::= ID LLAVE_A s2 LLAVE_C 
+          case 3: // s1 ::= NUMERO LLAVE_A s2 LLAVE_C 
             {
               Object RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$CapasParser$stack.elementAt(CUP$CapasParser$top-3)).left;
@@ -183,7 +183,7 @@ class CUP$CapasParser$actions {
 		Token id = (Token)((java_cup.runtime.Symbol) CUP$CapasParser$stack.elementAt(CUP$CapasParser$top-3)).value;
 		 
         Matriz nuevaMatriz = matriz;
-        nuevaMatriz.setId(id.getLexeme());
+        nuevaMatriz.setId(Integer.parseInt(id.getLexeme()));
         nuevaMatriz.imprimirNodos();
         Estructuras.insertarCapa(nuevaMatriz);
         matriz = new Matriz();
@@ -206,8 +206,8 @@ class CUP$CapasParser$actions {
 		int colorright = ((java_cup.runtime.Symbol)CUP$CapasParser$stack.elementAt(CUP$CapasParser$top-2)).right;
 		Token color = (Token)((java_cup.runtime.Symbol) CUP$CapasParser$stack.elementAt(CUP$CapasParser$top-2)).value;
 		
-        int x = Integer.parseInt(columna.getLexeme());
         int y = Integer.parseInt(fila.getLexeme());
+        int x = Integer.parseInt(columna.getLexeme());
         System.out.println("Pixel: "+x+","+y+" Color: "+color.getLexeme());
         matriz.insertarPixel(new NodoMatriz(x,y,color.getLexeme()));
     

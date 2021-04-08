@@ -32,29 +32,6 @@ public class Estructuras {
     private static ArbolABB arbolCapas = new ArbolABB();
     private static ListaDobleCircular listaImagenes = new ListaDobleCircular();
 
-    public static void main(String[] args) {
-        Matriz matriz = new Matriz("1");
-        matriz.insertarPixel(new NodoMatriz(1, 1, "#4568cb"));
-        matriz.insertarPixel(new NodoMatriz(1, 2, "#4568cb"));
-        matriz.insertarPixel(new NodoMatriz(1, 3, "#4568cb"));
-        matriz.insertarPixel(new NodoMatriz(1, 4, "#4568cb"));
-
-        Estructuras.insertarCapa(matriz);
-
-        Imagen imagen = new Imagen("imagen1");
-        imagen.getCapas().insertarNodo(new NodoListaSimple("1"));
-
-        listaImagenes.insertarNodo(new NodoListaDoble(imagen.getId(), imagen));
-
-        Estructuras.insertarUsuario("usuario");
-        Usuario usuario = (Usuario) Estructuras.buscarUsuario("usuario").getContenido();
-        //usuario.getListaImagenes().insertarNodo(new NodoListaDoble("imagen1"));
-        
-        usuario.getListaImagenes().mostrarDatos();
-        Usuario usuario1 = (Usuario) Estructuras.buscarUsuario("usuario").getContenido();
-        usuario1.getListaImagenes().mostrarDatos();
-
-    }
 
     public static void insertarUsuario(String id) {
         arbolUsuarios.insertarNodo(new NodoArbol(id, new Usuario(id)), false);
@@ -88,11 +65,11 @@ public class Estructuras {
         arbolCapas.insertarNodo(new NodoArbolABB(capaNueva, capaNueva.getId()));
     }
 
-    public static NodoArbolABB buscarCapa(String id) {
+    public static NodoArbolABB buscarCapa(int id) {
         return arbolCapas.buscarNodo(id);
     }
 
-    public static void graficarCapa(String id) {
+    public static void graficarCapa(int id) {
         NodoArbolABB nodoMatriz = arbolCapas.buscarNodo(id);
         Matriz matriz = (Matriz) nodoMatriz.getContenido();
         matriz.generarImagen();
@@ -110,8 +87,12 @@ public class Estructuras {
         listaImagenes.mostrarDatos();
     }
 
-    public static NodoListaDoble buscarImagen(String id) {
+    public static NodoListaDoble buscarImagen(int id) {
         return listaImagenes.buscarNodo(id);
+    }
+    
+    public static void mostrarImagenes(){
+        listaImagenes.mostrarDatos();
     }
 
     public static void guardarArchivo(StringBuffer codigo, String path) {
