@@ -38,7 +38,7 @@ public class ArbolABB {
             actualNodo.setHijoDerecho(insertarABB(actualNodo.getHijoDerecho(), nuevoNodo));
         } else
         {
-            JOptionPane.showMessageDialog(null, "La capa ya existe");
+            JOptionPane.showMessageDialog(null, "La capa ya: \""+nuevoNodo.getId()+"\" existe");
             return actualNodo;
         }
 

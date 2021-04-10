@@ -1,0 +1,46 @@
+package Analizadores;
+
+import Nodos.NodoListaDoble;
+import Objetos.Usuario;
+import Nucleo.Estructuras;
+import java_cup.runtime.*;
+
+parser code {:
+    Usuario user = new Usuario();
+    public UsersParser(UsersLexer lex){
+        super(lex);
+    }
+
+    @Override
+    public void syntax_error(Symbol st) {
+        Token error = (Token) st.value;
+        report_error("Error Sintactico con el Token:"+ error.getLexeme()+" este no pertenece a la estructura  >linea: "+error.getLine()+" >columna: "+error.getColumn() + "\n",null);
+    }
+
+:};
+
+non terminal s0,s1,s2;
+terminal Token ID,NUMERO,PUNTOCOMA,DOSPUNTOS,COMA;
+start with s0;
+
+s0 ::= s1 s0
+    |
+;
+ 
+s1 ::= ID:id DOSPUNTOS s2 PUNTOCOMA {:
+        Usuario nuevoUser = user;
+        nuevoUser.setId(id.getLexeme());
+        nuevoUser.getListaImagenes().mostrarDatos();
+        Estructuras.insertarUsuario(user);
+        user = new Usuario();
+    :}
+;
+
+s2 ::= NUMERO:img COMA s2{:
+        user.getListaImagenes().insertarNodo(new NodoListaDoble(Integer.parseInt(img.getLexeme())));
+    :}
+    | NUMERO:img {:
+        user.getListaImagenes().insertarNodo(new NodoListaDoble(Integer.parseInt(img.getLexeme())));
+    :}
+;
+

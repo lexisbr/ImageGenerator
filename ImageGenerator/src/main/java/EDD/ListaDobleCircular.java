@@ -33,9 +33,9 @@ public class ListaDobleCircular {
             root.setAnterior(end);
         } else
         {
-            System.out.println("NODO YA EXISTE: " + nuevoNodo.getId());
+            JOptionPane.showMessageDialog(null, "La imagen: \"" + nuevoNodo.getId() + "\" ya existe.");
         }
-        
+
         ordenarLista();
     }
 
@@ -57,21 +57,26 @@ public class ListaDobleCircular {
     public void mostrarDatos() {
         NodoListaDoble aux = root;
         System.out.println("Lista Circular Doblemente Enlazada ");
-        System.out.println("Tamanio " + getSize());
-        do
+        if (root != null)
         {
-            System.out.print("Nodo: " + aux.getId());
-            if (aux.getSiguiente() != null)
+            System.out.println("Tamanio " + getSize());
+            do
             {
-                System.out.print(" Siguiente: " + aux.getSiguiente().getId());
-            }
-            if (aux.getAnterior() != null)
-            {
-                System.out.print(" Anterior: " + aux.getAnterior().getId());
-            }
-            System.out.println("\n\n**********************************************");
-            aux = aux.getSiguiente();
-        } while (aux != root);
+                System.out.print("Nodo: " + aux.getId());
+                if (aux.getSiguiente() != null)
+                {
+                    System.out.print(" Siguiente: " + aux.getSiguiente().getId());
+                }
+                if (aux.getAnterior() != null)
+                {
+                    System.out.print(" Anterior: " + aux.getAnterior().getId());
+                }
+                System.out.println("\n\n**********************************************");
+                aux = aux.getSiguiente();
+            } while (aux != root);
+        }else{
+            System.out.println("LISTA VACIA");
+        }
 
     }
 
@@ -83,6 +88,7 @@ public class ListaDobleCircular {
             {
                 if (aux.getId() == id)
                 {
+
                     return aux;
                 } else
                 {
@@ -94,38 +100,53 @@ public class ListaDobleCircular {
         return null;
     }
 
-    public void eliminarNodo(int id) {
+    public boolean eliminarNodo(int id) {
         if (root != null)
         {
+            if (root == end)
+            {
+                root = end = null;
+                return true;
+            } else if (id == root.getId())
+            {
+                root = root.getSiguiente();
+            } else if (id == end.getId())
+            {
+                end = end.getAnterior();
+            }
             NodoListaDoble nodo = buscarNodo(id);
             NodoListaDoble nodoAnterior = nodo.getAnterior();
             NodoListaDoble nodoSiguiente = nodo.getSiguiente();
             nodoAnterior.setSiguiente(nodoSiguiente);
             nodoSiguiente.setAnterior(nodoAnterior);
-            JOptionPane.showMessageDialog(null, "Se ha eliminado imagen correctamente.");
+            return true;
         }
-        ordenarLista();
+        return false;
     }
 
     public void ordenarLista() {
         int size = getSize();
         if (size > 1)
         {
-            for(int i = 0; i < getSize();i++){
+            for (int i = 0; i < getSize(); i++)
+            {
                 NodoListaDoble actual = root;
                 NodoListaDoble siguiente = actual.getSiguiente();
-                for(int j=1; j<getSize(); j++){
-                    if(actual.getId() < siguiente.getId()){
+                for (int j = 1; j < getSize(); j++)
+                {
+                    if (actual.getId() < siguiente.getId())
+                    {
                         int id_1 = actual.getId();
                         Object imagen_1 = actual.getContenido();
-                        
+
                         actual.setId(siguiente.getId());
                         actual.setContenido(siguiente.getContenido());
                         siguiente.setId(id_1);
                         siguiente.setContenido(imagen_1);
                         actual = actual.getSiguiente();
                         siguiente = siguiente.getSiguiente();
-                    }else{
+                    } else
+                    {
                         actual = actual.getSiguiente();
                         siguiente = siguiente.getSiguiente();
                     }

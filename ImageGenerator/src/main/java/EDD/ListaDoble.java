@@ -23,7 +23,7 @@ public class ListaDoble {
         this.end = null;
     }
 
-    public void insertarNodo(NodoListaDoble nuevoNodo) {
+    public boolean insertarNodo(NodoListaDoble nuevoNodo) {
         NodoListaDoble imagenArbol = Estructuras.buscarImagen(nuevoNodo.getId());
         if (imagenArbol != null)
         {
@@ -37,18 +37,25 @@ public class ListaDoble {
                 end.setSiguiente(nuevoNodo);
                 nuevoNodo.setAnterior(end);
                 end = nuevoNodo;
+            } else
+            {
+                JOptionPane.showMessageDialog(null, "La imagen: \"" + nuevoNodo.getId() + "\" ya existe para el usuario");
+                return false;
             }
         } else
         {
-            JOptionPane.showMessageDialog(null, "La imagen no ha sido creada");
+            System.out.println("Entra");
+            JOptionPane.showMessageDialog(null, "La imagen: \"" + nuevoNodo.getId() + "\" no ha sido creada");
+            return false;
         }
+        return true;
     }
 
     public NodoListaDoble eliminarNodo(int id) {
         NodoListaDoble aux = root;
         while (aux != null)
         {
-            if (aux.getId() == id )
+            if (aux.getId() == id)
             {
                 NodoListaDoble nodoAnterior = aux.getAnterior();
                 NodoListaDoble nodoSiguiente = aux.getSiguiente();
@@ -61,6 +68,46 @@ public class ListaDoble {
             }
         }
         return null;
+    }
+
+    public boolean eliminarImagen(int id) {
+        if (root == null)
+        {
+            return false;
+        }
+        NodoListaDoble aux = root;
+        if (root == end)
+        {
+            root = end = null;
+            return true;
+        } else if (id == root.getId())
+        {
+            root = root.getSiguiente();
+            root.setAnterior(null);
+            return true;
+        } else if (id == end.getId())
+        {
+            end = end.getAnterior();
+            end.setSiguiente(null);
+            return true;
+        } else
+        {
+            while (aux != null)
+            {
+                if (aux.getId() == id)
+                {
+                    NodoListaDoble nodoAnterior = aux.getAnterior();
+                    NodoListaDoble nodoSiguiente = aux.getSiguiente();
+                    nodoAnterior.setSiguiente(nodoSiguiente);
+                    nodoSiguiente.setAnterior(nodoAnterior);
+                    return true;
+                } else
+                {
+                    aux = aux.getSiguiente();
+                }
+            }
+            return false;
+        }
     }
 
     public NodoListaDoble buscarNodo(int id) {
@@ -86,7 +133,6 @@ public class ListaDoble {
             {
                 return false;
             }
-            System.out.println("No existe: " + aux.getId());
             aux = aux.getSiguiente();
         }
         return true;

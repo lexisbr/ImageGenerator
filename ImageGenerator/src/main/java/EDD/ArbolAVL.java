@@ -296,7 +296,7 @@ public class ArbolAVL {
         return actualNodo;
     }
 
-    public void modificarUsuario(String nodoSeleccionado, String id) {
+    public boolean modificarUsuario(String nodoSeleccionado, String id) {
         NodoArbol nodoSelec = buscarNodo(nodoSeleccionado);
         NodoArbol nodoNuevo = buscarNodo(id);
 
@@ -304,15 +304,15 @@ public class ArbolAVL {
         {
             Usuario user = (Usuario) nodoSelec.getContenido();
             user.setId(id);
-            NodoArbol nodoModificado = new NodoArbol(user,id,nodoSelec.getHijoIzquierdo(),nodoSelec.getHijoDerecho());
             eliminarNodo(nodoSelec.getId(),true);
-            mostrarArbol();
+            NodoArbol nodoModificado = new NodoArbol(id,user);
             insertarNodo(nodoModificado,true);
-            mostrarArbol();
             JOptionPane.showMessageDialog(null, "El usuario fue modificado");
+            return true;
         } else
         {
             JOptionPane.showMessageDialog(null, "El id ya existe");
+            return false;
         }
     }
 

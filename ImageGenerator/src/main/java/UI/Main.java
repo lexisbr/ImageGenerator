@@ -26,7 +26,6 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         panelBotones = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         usuariosButton = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -42,15 +41,6 @@ public class Main extends javax.swing.JFrame {
 
         panelBotones.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 0, 102), null, null));
         panelBotones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jButton1.setText("Generar Imagenes");
-        jButton1.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, new java.awt.Color(102, 102, 102)));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        panelBotones.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(151, 147, 200, 40));
 
         usuariosButton.setText("Usuarios");
         usuariosButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, new java.awt.Color(102, 102, 102)));
@@ -69,7 +59,7 @@ public class Main extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        panelBotones.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(276, 89, 200, 40));
+        panelBotones.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 200, 40));
 
         jButton4.setText("Graficar Estructuras");
         jButton4.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, new java.awt.Color(102, 102, 102)));
@@ -78,9 +68,9 @@ public class Main extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        panelBotones.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 89, 200, 40));
+        panelBotones.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 200, 40));
 
-        jButton5.setText("Crear imagenes");
+        jButton5.setText("Imagenes");
         jButton5.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, new java.awt.Color(102, 102, 102)));
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,7 +79,7 @@ public class Main extends javax.swing.JFrame {
         });
         panelBotones.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(276, 17, 200, 40));
 
-        getContentPane().add(panelBotones, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 500, 210));
+        getContentPane().add(panelBotones, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 500, 190));
 
         label1.setFont(new java.awt.Font("FreeMono", 3, 36)); // NOI18N
         label1.setText("Generador de Imagenes");
@@ -100,6 +90,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        new OpcionesImagen();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -114,10 +105,6 @@ public class Main extends javax.swing.JFrame {
     private void usuariosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuariosButtonActionPerformed
         new OpcionesUsuario();
     }//GEN-LAST:event_usuariosButtonActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,7 +149,6 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

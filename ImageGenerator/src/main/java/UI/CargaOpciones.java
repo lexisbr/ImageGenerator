@@ -9,6 +9,8 @@ import Analizadores.CapasLexer;
 import Analizadores.CapasParser;
 import Analizadores.ImgLexer;
 import Analizadores.ImgParser;
+import Analizadores.UsersLexer;
+import Analizadores.UsersParser;
 import Nodos.NodoListaDoble;
 import Nodos.NodoListaSimple;
 import Nucleo.Estructuras;
@@ -64,7 +66,7 @@ public class CargaOpciones extends javax.swing.JFrame {
         archivoButton = new javax.swing.JButton();
         datosButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         label1.setFont(new java.awt.Font("FreeMono", 0, 24)); // NOI18N
         label1.setText("Carga de Datos");
@@ -149,15 +151,7 @@ public class CargaOpciones extends javax.swing.JFrame {
 
     private void limpiarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarButtonActionPerformed
         // TODO add your handling code here:
-        datosButton.setEnabled(false);
-        limpiarButton.setEnabled(false);
-        capasRadio.setEnabled(true);
-        imagenesRadio.setEnabled(true);
-        usuariosRadio.setEnabled(true);
-        archivoButton.setEnabled(true);
-        pathTxt.setText("");
-        cadena = "";
-
+        limpiarArchivo();
     }//GEN-LAST:event_limpiarButtonActionPerformed
 
     private void archivoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_archivoButtonActionPerformed
@@ -173,7 +167,7 @@ public class CargaOpciones extends javax.swing.JFrame {
             filtro = new FileNameExtensionFilter("*.im", "im");
         } else if (usuariosRadio.isSelected())
         {
-            filtro = new FileNameExtensionFilter("*.us", "us");
+            filtro = new FileNameExtensionFilter("*.usr", "usr");
         } else
         {
             JOptionPane.showMessageDialog(this, "No ha seleccionado tipo de archivo");
@@ -197,7 +191,7 @@ public class CargaOpciones extends javax.swing.JFrame {
                     cadena = cadena + (char) valor;
                     valor = fr.read();
                 }
-                System.out.println(cadena);
+                //    System.out.println(cadena);
                 datosButton.setEnabled(true);
                 limpiarButton.setEnabled(true);
                 capasRadio.setEnabled(false);
@@ -228,7 +222,8 @@ public class CargaOpciones extends javax.swing.JFrame {
                 ex.printStackTrace();
             }
 
-        }else if(imagenesRadio.isSelected()){
+        } else if (imagenesRadio.isSelected())
+        {
             ImgLexer lexer = new ImgLexer(reader);
             ImgParser parser = new ImgParser(lexer);
             try
@@ -239,7 +234,21 @@ public class CargaOpciones extends javax.swing.JFrame {
             {
                 ex.printStackTrace();
             }
+        } else if (usuariosRadio.isSelected())
+        {
+            UsersLexer lexer = new UsersLexer(reader);
+            UsersParser parser = new UsersParser(lexer);
+            try
+            {
+                parser.parse();
+                JOptionPane.showMessageDialog(this, "Se han cargado los usuarios correctamente.");
+            } catch (Exception ex)
+            {
+                ex.printStackTrace();
+            }
         }
+        
+        limpiarArchivo();
     }//GEN-LAST:event_datosButtonActionPerformed
 
     /**
@@ -282,6 +291,17 @@ public class CargaOpciones extends javax.swing.JFrame {
                 new CargaOpciones().setVisible(true);
             }
         });
+    }
+
+    public void limpiarArchivo() {
+        datosButton.setEnabled(false);
+        limpiarButton.setEnabled(false);
+        capasRadio.setEnabled(true);
+        imagenesRadio.setEnabled(true);
+        usuariosRadio.setEnabled(true);
+        archivoButton.setEnabled(true);
+        pathTxt.setText("");
+        cadena = "";
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

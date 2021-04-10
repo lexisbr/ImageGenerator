@@ -187,7 +187,7 @@ class CUP$ImgParser$actions {
 		
         Imagen nuevaImagen = imagen;
         nuevaImagen.setId(Integer.parseInt(id.getLexeme()));
-        nuevaImagen.getCapas().mostrarDatos();
+  //      nuevaImagen.getCapas().mostrarDatos();
         Estructuras.insertarImagen(nuevaImagen);
         imagen = new Imagen();
     
@@ -205,7 +205,8 @@ class CUP$ImgParser$actions {
 		
         Imagen nuevaImagen = imagen;
         nuevaImagen.setId(Integer.parseInt(id.getLexeme()));
-        nuevaImagen.getCapas().mostrarDatos();
+              //  System.out.println("\nIMAGENES");
+        //nuevaImagen.getCapas().mostrarDatos();
         Estructuras.insertarImagen(nuevaImagen);
         imagen = new Imagen();
     

@@ -184,7 +184,7 @@ class CUP$CapasParser$actions {
 		 
         Matriz nuevaMatriz = matriz;
         nuevaMatriz.setId(Integer.parseInt(id.getLexeme()));
-        nuevaMatriz.imprimirNodos();
+        //nuevaMatriz.imprimirNodos();
         Estructuras.insertarCapa(nuevaMatriz);
         matriz = new Matriz();
     
@@ -208,7 +208,7 @@ class CUP$CapasParser$actions {
 		
         int y = Integer.parseInt(fila.getLexeme());
         int x = Integer.parseInt(columna.getLexeme());
-        System.out.println("Pixel: "+x+","+y+" Color: "+color.getLexeme());
+      //  System.out.println("Pixel: "+x+","+y+" Color: "+color.getLexeme());
         matriz.insertarPixel(new NodoMatriz(x,y,color.getLexeme()));
     
               CUP$CapasParser$result = parser.getSymbolFactory().newSymbol("s2",2, ((java_cup.runtime.Symbol)CUP$CapasParser$stack.elementAt(CUP$CapasParser$top-6)), ((java_cup.runtime.Symbol)CUP$CapasParser$stack.peek()), RESULT);

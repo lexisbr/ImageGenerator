@@ -32,10 +32,14 @@ public class Estructuras {
     private static ArbolABB arbolCapas = new ArbolABB();
     private static ListaDobleCircular listaImagenes = new ListaDobleCircular();
 
-
     public static void insertarUsuario(String id) {
         arbolUsuarios.insertarNodo(new NodoArbol(id, new Usuario(id)), false);
-        arbolUsuarios.mostrarArbol();
+        //arbolUsuarios.mostrarArbol();
+    }
+
+    public static void insertarUsuario(Usuario user) {
+        arbolUsuarios.insertarNodo(new NodoArbol(user.getId(), user), true);
+        //  arbolUsuarios.mostrarArbol();
     }
 
     public static void eliminarUsuario(String id) {
@@ -56,8 +60,11 @@ public class Estructuras {
         }
     }
 
-    public static void modificarUsuario(String user, String id) {
-        arbolUsuarios.modificarUsuario(user, id);
+    public static boolean modificarUsuario(String user, String id) {
+        return arbolUsuarios.modificarUsuario(user, id);
+    }
+
+    public static void mostrarUsuarios() {
         arbolUsuarios.mostrarArbol();
     }
 
@@ -74,25 +81,41 @@ public class Estructuras {
         Matriz matriz = (Matriz) nodoMatriz.getContenido();
         matriz.generarImagen();
     }
-    
-    public static void mostrarCapas(){
+
+    public static void mostrarCapas() {
         arbolCapas.mostrarArbol();
     }
 
     public static void insertarImagen(Imagen imagenNueva) {
         listaImagenes.insertarNodo(new NodoListaDoble(imagenNueva.getId(), imagenNueva));
-        NodoListaDoble aux = listaImagenes.buscarNodo(imagenNueva.getId());
-        Imagen aux_img = (Imagen) aux.getContenido();
-        aux_img.getCapas().mostrarDatos();
-        listaImagenes.mostrarDatos();
+        //     listaImagenes.mostrarDatos();
     }
 
     public static NodoListaDoble buscarImagen(int id) {
         return listaImagenes.buscarNodo(id);
     }
     
-    public static void mostrarImagenes(){
+    public static NodoListaDoble buscarImagenUsuario(int idImagen,String idUsuario) {
+        Usuario user = (Usuario) arbolUsuarios.buscarNodo(idUsuario).getContenido();
+        return user.getListaImagenes().buscarNodo(idImagen);
+    }
+
+    public static void mostrarImagenes() {
         listaImagenes.mostrarDatos();
+    }
+
+    public static boolean insertarImagenUsuario(Imagen imagen, String idUsuario) {
+        Usuario user = (Usuario) arbolUsuarios.buscarNodo(idUsuario).getContenido();
+        return user.getListaImagenes().insertarNodo(new NodoListaDoble(imagen.getId(), imagen));
+    }
+
+    public static boolean eliminarImagenLista(int idImagen) {
+        return listaImagenes.eliminarNodo(idImagen);
+    }
+
+    public static boolean eliminarImagenUsuario(int idImagen, String idUsuario) {
+        Usuario user = (Usuario) arbolUsuarios.buscarNodo(idUsuario).getContenido();
+        return user.getListaImagenes().eliminarImagen(idImagen);
     }
 
     public static void guardarArchivo(StringBuffer codigo, String path) {

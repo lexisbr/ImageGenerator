@@ -12,8 +12,13 @@ import EDD.ListaDoble;
  * @author lex
  */
 public class Usuario {
+
     private String id;
     private ListaDoble listaImagenes;
+
+    public Usuario() {
+        this.listaImagenes = new ListaDoble();
+    }
 
     public Usuario(String id) {
         this.id = id;
@@ -23,8 +28,8 @@ public class Usuario {
     public String getId() {
         return id;
     }
-    
-    public ListaDoble getListaImagenes(){
+
+    public ListaDoble getListaImagenes() {
         return listaImagenes;
     }
 
@@ -35,5 +40,5 @@ public class Usuario {
     public void setListaImagenes(ListaDoble listaImagenes) {
         this.listaImagenes = listaImagenes;
     }
-    
+
 }

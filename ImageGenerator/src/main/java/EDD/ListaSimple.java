@@ -45,7 +45,7 @@ public class ListaSimple {
             }
         } else
         {
-            JOptionPane.showMessageDialog(null, "La capa no ha sido creada");
+            JOptionPane.showMessageDialog(null, "La capa: \""+nuevoNodo.getId()+"\" no ha sido creada");
         }
 
     }

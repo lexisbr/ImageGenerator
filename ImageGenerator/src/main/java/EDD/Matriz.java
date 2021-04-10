@@ -423,7 +423,7 @@ public class Matriz {
             Estructuras.guardarArchivo(codigo, imagen.getAbsolutePath());
             String comando = "dot -Tpng capa.dot -o imagenCapa.png";
             Runtime.getRuntime().exec(comando);
-            JOptionPane.showMessageDialog(null, "Se ha generado la imagen de la capa exitosamente: " + imagen.getPath());
+            JOptionPane.showMessageDialog(null, "Se ha generado la imagen de la capa exitosamente: imagenCapa.png");
         } catch (IOException e)
         {
             JOptionPane.showMessageDialog(null, "Error al generar imagen de capa");
