@@ -177,6 +177,11 @@ public class ArbolABB {
         Estructuras.generarGrafo(grafica, "\"Arbol ABB de Capas\"", "arbolABB");
     }
     
+    public void obtenerGrafica(){
+        grafica = new StringBuffer();
+        obtenerGrafo(root);
+    }
+    
     public void obtenerGrafo(NodoArbolABB nodo){
         if(nodo==null){
             return;
@@ -191,5 +196,11 @@ public class ArbolABB {
         }
         obtenerGrafo(nodo.getHijoDerecho());
     }
+
+    public StringBuffer getGrafica() {
+        return grafica;
+    }
+    
+    
     
 }

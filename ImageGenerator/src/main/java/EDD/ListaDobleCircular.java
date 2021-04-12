@@ -202,7 +202,6 @@ public class ListaDobleCircular {
             aux = aux.getSiguiente();
             cont++;
         }while(aux != root);
-        grafica.append("}");
         Estructuras.generarGrafo(grafica, "\"Lista de Imagenes\"", "listaImagenes");
     }
     

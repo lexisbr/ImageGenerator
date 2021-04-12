@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package EDD;
 
 import Nodos.NodoMatriz;
@@ -20,6 +15,7 @@ public class Matriz {
     private final String WHITE = "#FFFFFF";
     private NodoMatriz root;
     private int id;
+    private StringBuffer grafica;
 
     public Matriz() {
         this.root = new NodoMatriz(0, 0, "root");
@@ -31,16 +27,18 @@ public class Matriz {
     }
 
     public void insertarPixel(NodoMatriz nuevoNodo) {
-        if (buscarNodo(nuevoNodo.getX(), nuevoNodo.getY()) == null)
+        NodoMatriz aux = buscarNodo(nuevoNodo.getX(), nuevoNodo.getY());
+        if (aux == null)
         {
             verificarEncabezado(nuevoNodo.getX(), nuevoNodo.getY());
             insertarPixelColumna(nuevoNodo);
             insertarPixelFila(nuevoNodo);
-        }/* else
+        } else
         {
-            JOptionPane.showMessageDialog(null, "El pixel en la posicion (" + nuevoNodo.getX() + "," + nuevoNodo.getY() + ") ya existe. Matriz: "+getId());
-            imprimirNodos();
-        }*/
+            aux.setContenido(nuevoNodo.getContenido());
+            /*JOptionPane.showMessageDialog(null, "El pixel en la posicion (" + nuevoNodo.getX() + "," + nuevoNodo.getY() + ") ya existe. Matriz: " + getId());
+            imprimirNodos();*/
+        }
 
     }
 
@@ -180,29 +178,29 @@ public class Matriz {
     public void imprimirNodos() {
         NodoMatriz aux_x = root;
         NodoMatriz aux_y = root;
-        System.out.println("\n\nMatriz: "+getId());
+        System.out.println("\n\nMatriz: " + getId());
         while (aux_y != null)
         {
             aux_x = aux_y;
             while (aux_x != null)
             {
 
-                System.out.print("\n" + aux_x.getContenido().toString() + " >> ");
+                System.out.print("\n" + aux_x.getContenido().toString()+" "+aux_x.getX()+","+aux_x.getY() + " >> ");
                 if (aux_x.getArriba() != null)
                 {
-                    System.out.print("Arriba: " + aux_x.getArriba().getContenido().toString() + " >> ");
+                    System.out.print("Arriba: " + aux_x.getArriba().getContenido().toString()+" "+aux_x.getArriba().getX()+","+aux_x.getArriba().getY()+ " >> ");
                 }
                 if (aux_x.getAbajo() != null)
                 {
-                    System.out.print("Abajo: " + aux_x.getAbajo().getContenido().toString() + " >> ");
+                    System.out.print("Abajo: " + aux_x.getAbajo().getContenido().toString() +" "+aux_x.getAbajo().getX()+","+aux_x.getAbajo().getY()+ " >> ");
                 }
                 if (aux_x.getDerecha() != null)
                 {
-                    System.out.print("Derecha: " + aux_x.getDerecha().getContenido().toString() + " >> ");
+                    System.out.print("Derecha: " + aux_x.getDerecha().getContenido().toString() +" "+aux_x.getDerecha().getX()+","+aux_x.getDerecha().getY()+ " >> ");
                 }
                 if (aux_x.getIzquierda() != null)
                 {
-                    System.out.print("Izquierda: " + aux_x.getIzquierda().getContenido().toString() + " >> ");
+                    System.out.print("Izquierda: " + aux_x.getIzquierda().getContenido().toString() +" "+aux_x.getIzquierda().getX()+","+aux_x.getIzquierda().getY()+ " >> ");
                 }
                 aux_x = aux_x.getDerecha();
             }
@@ -355,7 +353,7 @@ public class Matriz {
     public boolean estaVacia() {
         if (root.getDerecha() == null && root.getAbajo() == null)
         {
-             return true;
+            return true;
         } else
         {
             return false;
@@ -429,6 +427,74 @@ public class Matriz {
             JOptionPane.showMessageDialog(null, "Error al generar imagen de capa");
         }
 
+    }
+
+    public void crearGraficar() {
+        imprimirNodos();
+        grafica = new StringBuffer();
+        grafica.append("subgraph cluster_1 { node [shape = rect, height =.1];\n");
+        NodoMatriz aux_x = root;
+        NodoMatriz aux_y = root;
+        cargarEncabezadosGrafo();
+        cargarNodosGrafo();
+        while (aux_y != null)
+        {
+            aux_x = aux_y;
+            while (aux_x != null)
+            {
+                if (aux_x.getArriba() != null)
+                {
+                    grafica.append("\"" + aux_x.getContenido().toString() + "(" + aux_x.getX() + "," + aux_x.getY() + ")" + "\"" + "->\"" + aux_x.getArriba().getContenido().toString() + "(" + aux_x.getArriba().getX() + "," + aux_x.getArriba().getY() + ")" + "\"; \n");
+                }
+                if (aux_x.getAbajo() != null)
+                {
+                    grafica.append("\"" + aux_x.getContenido().toString() + "(" + aux_x.getX() + "," + aux_x.getY() + ")" + "\"" + "->\"" + aux_x.getAbajo().getContenido().toString() + "(" + aux_x.getAbajo().getX() + "," + aux_x.getAbajo().getY() + ")" + "\"; \n");
+                }
+                if (aux_x.getDerecha() != null)
+                {
+                    grafica.append("\"" + aux_x.getContenido().toString() + "(" + aux_x.getX() + "," + aux_x.getY() + ")" + "\"" + "->\"" + aux_x.getDerecha().getContenido().toString() + "(" + aux_x.getDerecha().getX() + "," + aux_x.getDerecha().getY() + ")" + "\"; \n");
+                }
+                if (aux_x.getIzquierda() != null)
+                {
+                    grafica.append("\"" + aux_x.getContenido().toString() + "(" + aux_x.getX() + "," + aux_x.getY() + ")" + "\"" + "->\"" + aux_x.getIzquierda().getContenido().toString() + "(" + aux_x.getIzquierda().getX() + "," + aux_x.getIzquierda().getY() + ")" + "\"; \n");
+                }
+                aux_x = aux_x.getDerecha();
+            }
+            aux_y = aux_y.getAbajo();
+        }
+
+        grafica.append("}");
+        Estructuras.generarMatriz(grafica, "\"Matriz de pixeles. Capa: " + id + "\"", "capaMatriz");
+    }
+
+    public void cargarEncabezadosGrafo() {
+        NodoMatriz aux_x = root;
+        while (aux_x != null)
+        {
+            grafica.append("\"" + aux_x.getContenido().toString() + "(" + aux_x.getX() + "," + aux_x.getY() + ")" + "\" [pos=\"" + aux_x.getX() + "," + aux_x.getY() + "!\"]; \n");
+            aux_x = aux_x.getDerecha();
+        }
+
+        aux_x = root.getAbajo();
+        while (aux_x != null)
+        {
+            grafica.append("\"" + aux_x.getContenido().toString() + "(" + aux_x.getX() + "," + aux_x.getY() + ")" + "\" [pos=\"" + aux_x.getX() + "," + aux_x.getY() + "!\"]; \n");
+            aux_x = aux_x.getAbajo();
+        }
+    }
+
+    public void cargarNodosGrafo() {
+        for (int y = 1; y <= obtenerFilas(); y++)
+        {
+            for (int x = 1; x <= obtenerColumnas(); x++)
+            {
+                NodoMatriz aux_x = buscarNodo(x, y);
+                if (aux_x != null)
+                {
+                    grafica.append("\"" + aux_x.getContenido().toString() + "(" + aux_x.getX() + "," + aux_x.getY() + ")" + "\" [pos=\"" + aux_x.getX() + "," + aux_x.getY() + "!\"]; \n");
+                }
+            }
+        }
     }
 
     public NodoMatriz getRoot() {

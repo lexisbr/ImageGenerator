@@ -154,19 +154,24 @@ public class Estructuras {
             }
         }
     }
-    
-    public static void graficarArbolUsuarios(){
+
+    public static void graficarArbolUsuarios() {
         arbolUsuarios.crearGrafo();
     }
-    
-    public static void graficarArbolCapas(){
+
+    public static void graficarArbolCapas() {
         arbolCapas.crearGrafo();
     }
-    
-    public static void graficarListaImagenes(){
+
+    public static void graficarListaImagenes() {
         listaImagenes.crearGrafo();
     }
-    
+
+    public static StringBuffer obtenerGraficaCapas() {
+        arbolCapas.obtenerGrafica();
+        return arbolCapas.getGrafica();
+    }
+
     public static void generarGrafo(StringBuffer codigo, String titulo, String archivo) {
         StringBuffer salida = new StringBuffer("digraph G{\n"
                 + "subgraph cluster_0{\n"
@@ -194,6 +199,41 @@ public class Estructuras {
             }
             guardarArchivo(codigo, imagen.getAbsolutePath());
             String comando = "dot -Tpng grafo.dot -o " + titulo + ".png";
+            Runtime.getRuntime().exec(comando);
+            JOptionPane.showMessageDialog(null, "Se ha generado la imagen de la capa exitosamente: \"" + titulo + ".png\" ");
+        } catch (IOException e)
+        {
+            JOptionPane.showMessageDialog(null, "Error al generar imagen de capa");
+        }
+    }
+
+    public static void generarMatriz(StringBuffer codigo, String titulo, String archivo) {
+        StringBuffer salida = new StringBuffer("digraph G{\n"
+                + "subgraph cluster_0{\n"
+                + "style=filled;\n"
+                + "color=lightgrey;\n"
+                + "node[style=filled,color=white];\n"
+                + codigo + "label=" + titulo + ";\n"
+                + "}\n"
+                + "}\n"
+        );
+        obtenerGrafoMatriz(salida, archivo);
+    }
+
+    private static void obtenerGrafoMatriz(StringBuffer codigo, String titulo) {
+        try
+        {
+            File imagen = new File("./grafo.dot");
+            if (imagen.exists())
+            {
+                imagen.delete();
+                imagen.createNewFile();
+            } else
+            {
+                imagen.createNewFile();
+            }
+            guardarArchivo(codigo, imagen.getAbsolutePath());
+            String comando = "dot -Kfdp -n -Tpng -o " + titulo + ".png grafo.dot ";
             Runtime.getRuntime().exec(comando);
             JOptionPane.showMessageDialog(null, "Se ha generado la imagen de la capa exitosamente: \"" + titulo + ".png\" ");
         } catch (IOException e)

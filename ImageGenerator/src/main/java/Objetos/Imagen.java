@@ -9,6 +9,7 @@ import EDD.ListaSimple;
 import EDD.Matriz;
 import Nodos.NodoListaSimple;
 import Nodos.NodoMatriz;
+import Nucleo.Estructuras;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -21,6 +22,7 @@ public class Imagen {
     private int id;
     private ListaSimple capas;
     private Matriz imagen;
+    private StringBuffer grafica;
 
     public Imagen() {
         this.capas = new ListaSimple();
@@ -95,6 +97,32 @@ public class Imagen {
 
         }
 
+    }
+
+    public void graficarImagenCapas() {
+        grafica = new StringBuffer();
+        grafica.append("subgraph cluster_1 { node [shape = ellipse, height =.1];\n");
+        NodoListaSimple capa = capas.getRoot();
+        while (capa != null)
+        {
+            grafica.append("\"Capa " + capa.getId() + "\"");
+            if (capa.getSiguiente() != null)
+            {
+                grafica.append("->\"Capa " + capa.getSiguiente().getId() + "\"; \n");
+            }else{
+                grafica.append("; \n");
+            }
+            grafica.append("\"Capa " + capa.getId() + "\" -> " + capa.getCapa().getId() + " [lhead = cluster_2]; \n");
+            capa = capa.getSiguiente();
+        }
+        grafica.append("}");
+        capa = capas.getRoot();
+        grafica.append("\"Imagen "+id+"\" -> \"Capa " + capa.getId() + "\" [lhead = cluster_1];\n");
+        grafica.append("subgraph cluster_2\n");
+        grafica.append("{\n node [shape = rect, height =.1];");
+        grafica.append(Estructuras.obtenerGraficaCapas());
+        grafica.append("}\n");
+        Estructuras.generarGrafo(grafica, "\"Imagen con capas\"", "imagenCapas");
     }
 
 }
