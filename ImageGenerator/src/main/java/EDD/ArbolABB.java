@@ -6,6 +6,8 @@
 package EDD;
 
 import Nodos.NodoArbolABB;
+import Nodos.NodoListaSimple;
+import Nucleo.Estructuras;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,6 +17,8 @@ import javax.swing.JOptionPane;
 public class ArbolABB {
 
     private NodoArbolABB root;
+    private ListaSimple listaCapas;
+    private StringBuffer grafica;
 
     public ArbolABB() {
         this.root = null;
@@ -38,7 +42,7 @@ public class ArbolABB {
             actualNodo.setHijoDerecho(insertarABB(actualNodo.getHijoDerecho(), nuevoNodo));
         } else
         {
-            JOptionPane.showMessageDialog(null, "La capa ya: \""+nuevoNodo.getId()+"\" existe");
+            JOptionPane.showMessageDialog(null, "La capa ya: \"" + nuevoNodo.getId() + "\" existe");
             return actualNodo;
         }
 
@@ -99,4 +103,93 @@ public class ArbolABB {
 
     }
 
+    public ListaSimple inOrden(int numeroCapas) {
+        listaCapas = new ListaSimple();
+        inOrden(root, numeroCapas);
+        return listaCapas;
+    }
+
+    private void inOrden(NodoArbolABB nodo, int numeroCapas) {
+        if (nodo == null)
+        {
+            return;
+        }
+
+        inOrden(nodo.getHijoIzquierdo(), numeroCapas);
+        if (listaCapas.getSize() == numeroCapas)
+        {
+            return;
+        } else
+        {
+            listaCapas.insertarNodo(new NodoListaSimple(nodo.getId(), nodo));
+        }
+        inOrden(nodo.getHijoDerecho(), numeroCapas);
+
+    }
+
+    public ListaSimple preOrden(int numeroCapas) {
+        listaCapas = new ListaSimple();
+        preOrden(root, numeroCapas);
+        return listaCapas;
+    }
+
+    private void preOrden(NodoArbolABB nodo, int numeroCapas) {
+        if (null == nodo)
+        {
+            return;
+        }
+        if (listaCapas.getSize() == numeroCapas)
+        {
+            return;
+        } else
+        {
+            listaCapas.insertarNodo(new NodoListaSimple(nodo.getId(), nodo));
+        }
+        preOrden(nodo.getHijoIzquierdo(),numeroCapas);
+        preOrden(nodo.getHijoDerecho(),numeroCapas);
+    }
+
+    public ListaSimple postOrden(int numeroCapas) {
+        listaCapas = new ListaSimple();
+        postOrden(root, numeroCapas);
+        return listaCapas;
+    }
+
+    private void postOrden(NodoArbolABB nodo, int numeroCapas) {
+        if (null == nodo)
+        {
+            return;
+        }
+        postOrden(nodo.getHijoIzquierdo(), numeroCapas);
+        postOrden(nodo.getHijoDerecho(), numeroCapas);
+        if (listaCapas.getSize() == numeroCapas)
+        {
+            return;
+        } else
+        {
+            listaCapas.insertarNodo(new NodoListaSimple(nodo.getId(), nodo));
+        }
+    }
+    
+    public void crearGrafo(){
+        grafica = new StringBuffer();
+        obtenerGrafo(root);
+        Estructuras.generarGrafo(grafica, "\"Arbol ABB de Capas\"", "arbolABB");
+    }
+    
+    public void obtenerGrafo(NodoArbolABB nodo){
+        if(nodo==null){
+            return;
+        }
+        
+        obtenerGrafo(nodo.getHijoIzquierdo());
+        if(nodo.getHijoIzquierdo()!=null){
+            grafica.append(nodo.getId()+"->"+nodo.getHijoIzquierdo().getId()+";\n");
+        }
+        if(nodo.getHijoDerecho()!=null){
+            grafica.append(nodo.getId()+"->"+nodo.getHijoDerecho().getId()+";\n");
+        }
+        obtenerGrafo(nodo.getHijoDerecho());
+    }
+    
 }

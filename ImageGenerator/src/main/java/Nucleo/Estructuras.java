@@ -18,6 +18,7 @@ import Nodos.NodoMatriz;
 import Objetos.Imagen;
 import Objetos.Usuario;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.JOptionPane;
@@ -86,6 +87,18 @@ public class Estructuras {
         arbolCapas.mostrarArbol();
     }
 
+    public static ListaSimple inOrdenCapas(int numero) {
+        return arbolCapas.inOrden(numero);
+    }
+
+    public static ListaSimple postOrdenCapas(int numero) {
+        return arbolCapas.postOrden(numero);
+    }
+
+    public static ListaSimple preOrdenCapas(int numero) {
+        return arbolCapas.preOrden(numero);
+    }
+
     public static void insertarImagen(Imagen imagenNueva) {
         listaImagenes.insertarNodo(new NodoListaDoble(imagenNueva.getId(), imagenNueva));
         //     listaImagenes.mostrarDatos();
@@ -94,8 +107,8 @@ public class Estructuras {
     public static NodoListaDoble buscarImagen(int id) {
         return listaImagenes.buscarNodo(id);
     }
-    
-    public static NodoListaDoble buscarImagenUsuario(int idImagen,String idUsuario) {
+
+    public static NodoListaDoble buscarImagenUsuario(int idImagen, String idUsuario) {
         Usuario user = (Usuario) arbolUsuarios.buscarNodo(idUsuario).getContenido();
         return user.getListaImagenes().buscarNodo(idImagen);
     }
@@ -139,6 +152,53 @@ public class Estructuras {
             {
                 JOptionPane.showMessageDialog(null, "No se pudo cerrar el archivo");
             }
+        }
+    }
+    
+    public static void graficarArbolUsuarios(){
+        arbolUsuarios.crearGrafo();
+    }
+    
+    public static void graficarArbolCapas(){
+        arbolCapas.crearGrafo();
+    }
+    
+    public static void graficarListaImagenes(){
+        listaImagenes.crearGrafo();
+    }
+    
+    public static void generarGrafo(StringBuffer codigo, String titulo, String archivo) {
+        StringBuffer salida = new StringBuffer("digraph G{\n"
+                + "subgraph cluster_0{\n"
+                + "style=filled;\n"
+                + "color=lightgrey;\n"
+                + "node[style=filled,color=white];\n"
+                + codigo + "label=" + titulo + ";\n"
+                + "}\n"
+                + "}\n"
+        );
+        obtenerGrafo(salida, archivo);
+    }
+
+    private static void obtenerGrafo(StringBuffer codigo, String titulo) {
+        try
+        {
+            File imagen = new File("./grafo.dot");
+            if (imagen.exists())
+            {
+                imagen.delete();
+                imagen.createNewFile();
+            } else
+            {
+                imagen.createNewFile();
+            }
+            guardarArchivo(codigo, imagen.getAbsolutePath());
+            String comando = "dot -Tpng grafo.dot -o " + titulo + ".png";
+            Runtime.getRuntime().exec(comando);
+            JOptionPane.showMessageDialog(null, "Se ha generado la imagen de la capa exitosamente: \"" + titulo + ".png\" ");
+        } catch (IOException e)
+        {
+            JOptionPane.showMessageDialog(null, "Error al generar imagen de capa");
         }
     }
 

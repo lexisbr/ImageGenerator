@@ -6,6 +6,7 @@
 package EDD;
 
 import Nodos.NodoArbol;
+import Nucleo.Estructuras;
 import Objetos.Usuario;
 import javax.swing.JOptionPane;
 
@@ -18,6 +19,7 @@ public class ArbolAVL {
     private NodoArbol root;
     private boolean exist = false;
     private boolean deleted = false;
+    private StringBuffer grafica;
 
     public ArbolAVL() {
         this.root = null;
@@ -314,6 +316,27 @@ public class ArbolAVL {
             JOptionPane.showMessageDialog(null, "El id ya existe");
             return false;
         }
+    }
+    
+    public void crearGrafo(){
+        grafica = new StringBuffer();
+        obtenerGrafo(root);
+        Estructuras.generarGrafo(grafica, "\"Arbol AVL de Usuarios\"", "arbolAVL");
+    }
+    
+    public void obtenerGrafo(NodoArbol nodo){
+        if(nodo==null){
+            return;
+        }
+        
+        obtenerGrafo(nodo.getHijoIzquierdo());
+        if(nodo.getHijoIzquierdo()!=null){
+            grafica.append(nodo.getId()+"->"+nodo.getHijoIzquierdo().getId()+";\n");
+        }
+        if(nodo.getHijoDerecho()!=null){
+            grafica.append(nodo.getId()+"->"+nodo.getHijoDerecho().getId()+";\n");
+        }
+        obtenerGrafo(nodo.getHijoDerecho());
     }
 
 }

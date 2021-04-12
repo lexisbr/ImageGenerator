@@ -1,0 +1,32 @@
+digraph G{
+subgraph cluster_0{
+style=filled;
+color=lightgrey;
+node[style=filled,color=white];
+subgraph Lista { node [shape = square, height =.1]; 
+4->3 [constraint=false]; 
+3->4 [constraint=false]; 
+3->2 [constraint=false]; 
+2->3 [constraint=false]; 
+2->1 [constraint=false]; 
+1->2 [constraint=false]; 
+1->4 [constraint=false]; 
+4->1 [constraint=false]; 
+}subgraph cluster_1 { node [shape = rect, height =.1]; rankdir=LR label="Lista de Capas 1"; 
+Lista_1_Capa_1->Lista_1_Capa_2; 
+Lista_1_Capa_2; 
+}4->Lista_1_Capa_1; 
+subgraph cluster_2 { node [shape = rect, height =.1]; rankdir=LR label="Lista de Capas 2"; 
+Lista_2_Capa_1; 
+}3->Lista_2_Capa_1; 
+subgraph cluster_3 { node [shape = rect, height =.1]; rankdir=LR label="Lista de Capas 3"; 
+Lista_3_Capa_1->Lista_3_Capa_2; 
+Lista_3_Capa_2->Lista_3_Capa_3; 
+Lista_3_Capa_3; 
+}2->Lista_3_Capa_1; 
+subgraph cluster_4 { node [shape = rect, height =.1]; rankdir=LR label="Lista de Capas 4"; 
+Lista_4_Capa_3; 
+}1->Lista_4_Capa_3; 
+}label="Lista de Imagenes";
+}
+}

@@ -1,6 +1,9 @@
 package EDD;
 
 import Nodos.NodoListaDoble;
+import Nodos.NodoListaSimple;
+import Nucleo.Estructuras;
+import Objetos.Imagen;
 import javax.swing.JOptionPane;
 
 /**
@@ -11,6 +14,7 @@ public class ListaDobleCircular {
 
     private NodoListaDoble root;
     private NodoListaDoble end;
+    private StringBuffer grafica;
 
     public ListaDobleCircular() {
         root = null;
@@ -165,5 +169,42 @@ public class ListaDobleCircular {
         } while (aux != root);
         return size;
     }
+    
+    public void crearGrafo(){
+        grafica = new StringBuffer();
+        grafica.append("subgraph Lista { node [shape = square, height =.1]; \n");
+        NodoListaDoble aux = root;
+        do{
+            grafica.append(aux.getId()+"->"+aux.getSiguiente().getId()+" [constraint=false]; \n");
+            grafica.append(aux.getSiguiente().getId()+"->"+aux.getSiguiente().getAnterior().getId()+" [constraint=false]; \n");
+            aux = aux.getSiguiente();
+        }while(aux != root);
+        grafica.append("}");
+        aux = root;
+        int cont = 1;
+        do{
+            Imagen imagen = (Imagen) aux.getContenido();
+            ListaSimple listaCapas = imagen.getCapas();
+            grafica.append("subgraph cluster_"+cont+" { node [shape = rect, height =.1]; rankdir=LR label=\"Lista de Capas "+cont+"\"; \n");
+            NodoListaSimple auxCapas = listaCapas.getRoot();
+            while(auxCapas != null){
+                grafica.append("Lista_"+cont+"_"+"Capa_"+auxCapas.getId());
+                if(auxCapas.getSiguiente() != null){
+                    grafica.append("->"+"Lista_"+cont+"_"+"Capa_"+auxCapas.getSiguiente().getId()+"; \n");
+                }else{
+                    grafica.append("; \n");
+                }
+                auxCapas = auxCapas.getSiguiente();
+            }
+            grafica.append("}");
+            auxCapas = listaCapas.getRoot();
+            grafica.append(aux.getId() + "->"+"Lista_"+cont+"_"+"Capa_"+auxCapas.getId()+"; \n");
+            aux = aux.getSiguiente();
+            cont++;
+        }while(aux != root);
+        grafica.append("}");
+        Estructuras.generarGrafo(grafica, "\"Lista de Imagenes\"", "listaImagenes");
+    }
+    
 
 }

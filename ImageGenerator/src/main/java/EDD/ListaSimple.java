@@ -131,5 +131,21 @@ public class ListaSimple {
             return false;
         }
     }
+    
+    public int getSize(){
+        NodoListaSimple aux = root;
+        int numero = 0;
+        while(aux != null){
+            numero++;
+            aux = aux.getSiguiente();
+        }
+        return numero;
+    }
+
+    public NodoListaSimple getRoot() {
+        return root;
+    }
+    
+    
 
 }

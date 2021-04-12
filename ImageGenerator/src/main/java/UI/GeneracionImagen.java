@@ -132,12 +132,12 @@ public class GeneracionImagen extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        new ModificarUsuarios();
+        new PorUsuario();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void crearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearButtonActionPerformed
         // TODO add your handling code here:
-        new AgregarImagen();
+        new PorRecorridoLimitado();
     }//GEN-LAST:event_crearButtonActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
